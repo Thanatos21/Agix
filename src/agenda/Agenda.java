@@ -14,10 +14,12 @@ public class Agenda {
     private String id;
     private String dest;
     private String src;
+    private String title;
+    private String summary;
     private ArrayList<Evt> events;
 
     /**
-     * Construct an Agenda with an id, a destination address and a source address
+     * Constructs an Agenda with an id, a destination address and a source address
      * @param id
      * @param dest
      * @param src
@@ -29,7 +31,7 @@ public class Agenda {
     }
 
     /**
-     * Return the if of the agenda
+     * Returns the if of the agenda
      * @return id
      */
     public String getId() {
@@ -37,7 +39,7 @@ public class Agenda {
     }
 
     /**
-     * Return the destination address of the agenda
+     * Returns the destination address of the agenda
      * @return dest
      */
     public String getDest() {
@@ -45,7 +47,7 @@ public class Agenda {
     }
 
     /**
-     * Return the source address of the agenda
+     * Returns the source address of the agenda
      * @return src
      */
     public String getSrc() {
@@ -53,7 +55,7 @@ public class Agenda {
     }
 
     /**
-     * Set the agenda list of events.
+     * Sets the agenda list of events.
      * @param events
      */
     public void setEvents(ArrayList<Evt> events) {
@@ -61,7 +63,7 @@ public class Agenda {
     }
     
     /**
-     * Set the id of the agenda
+     * Sets the id of the agenda
      * @param id
      */
     public void setId(String id) {
@@ -69,7 +71,7 @@ public class Agenda {
     }
 
     /**
-     * Set the destination address of the agenda
+     * Sets the destination address of the agenda
      * @param dest
      */
     public void setDest(String dest) {
@@ -77,7 +79,7 @@ public class Agenda {
     }
 
     /**
-     * Set the source address of the agenda
+     * Sets the source address of the agenda
      * @param src
      */
     public void setSrc(String src) {
@@ -85,7 +87,7 @@ public class Agenda {
     }
     
     /**
-     * The list of the events from the agenda.
+     * Returns the list of the events from the agenda.
      * @return events
      */
     public ArrayList<Evt> getEvents() {
@@ -93,7 +95,40 @@ public class Agenda {
     }
 
     /**
-     * Add a new Evt into the agenda.
+     * Sets the title of the agenda.
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * Sets the summary of the agenda.
+     * @param summary
+     */
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    /**
+     * Returns the title of the agenda.
+     * @return title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Returns the summary of the agenda.
+     * @return summary
+     */
+    public String getSummary() {
+        return summary;
+    }
+    
+    
+    /**
+     * Adds a new Evt into the agenda.
      * @param evt
      */
     public void addEvent(Evt evt){
@@ -101,7 +136,7 @@ public class Agenda {
     }
     
     /**
-     * Remove the Evt given in parameter from the agenda list of events.
+     * Removes the Evt given in parameter from the agenda list of events.
      * @param evt
      */
     public void removeEvt(Evt evt){

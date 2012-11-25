@@ -20,6 +20,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
+        
             AgendaManager manager = AgendaManager.getInstance();
         try {
             //            System.out.println(System.getProperty("http.proxyHost"));
@@ -37,6 +39,8 @@ public class Main {
             //         manager.getAgenda();
                         
          manager.googleAgendasList();
+        
+         
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ServiceException ex) {

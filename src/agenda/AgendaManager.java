@@ -21,7 +21,7 @@ public class AgendaManager {
     }
     
     /**
-     * Create an instance of agendaManager if does not exist and return it.
+     * Creates an instance of agendaManager if does not exist and return it.
      * @return instance
      */
     public static synchronized AgendaManager getInstance(){
@@ -32,7 +32,7 @@ public class AgendaManager {
     }
     
     /**
-     * Set the agendas list for the agendaManager
+     * Sets the agendas list for the agendaManager
      * @param agendas
      */
     public void setAgendas(ArrayList<Agenda> agendas) {
@@ -40,7 +40,7 @@ public class AgendaManager {
     }
 
     /**
-     * Return the agendas list of the AgendaManager
+     * Returns the agendas list of the AgendaManager
      * @return agendas
      */
     public ArrayList<Agenda> getAgendas() {
@@ -73,7 +73,7 @@ public class AgendaManager {
     }
     
     /**
-     * Download and save an agenda from the URL asked by the method.
+     * Downloads and saves an agenda from the URL asked by the method.
      */
     public void getAgenda(){
         System.out.print("Download agenda from : ");
@@ -83,25 +83,49 @@ public class AgendaManager {
     }
     
     /**
-     * Add the agenda given in parameter into the agendas list of the 
+     * Adds the agenda given in parameter into the agendas list of the 
      * AgendaManager.
-     * @param agenda 
+     * @param agenda
+     * @param service
+     * @throws IOException 
+     * @throws ServiceException  
      */
-    public void addAgenda(Agenda agenda){
+    public void addAgenda(Agenda agenda, Services service) throws IOException, ServiceException{
+        
         this.agendas.add(agenda);
+        
+        switch(service){
+            case GOOGLE:
+                tools.googleTools.Tools.createCalendar(agenda);
+                break;
+            case LOCALHOST:
+                tools.localhostTools.Tools.createCalendar(agenda);
+                break;
+        }
+        
     }
     
     /**
-     * Remove the agenda given in parameter from the agendas list of the
+     * Removes the agenda given in parameter from the agendas list of the
      * AgendaManager.
      * @param agenda 
      */
-    public void removeAgenda(Agenda agenda){
+    public void removeAgenda(Agenda agenda, Services service) throws IOException, ServiceException{
         this.agendas.remove(agenda);
+        
+        switch(service){
+            case GOOGLE:
+                tools.googleTools.Tools.removeCalendar(agenda);
+                break;
+            case LOCALHOST:
+                tools.localhostTools.Tools.removeCalendar(agenda);
+                break;
+        }
+        
     }
     
     /**
-     * Edit an agenda. Replace an agenda into the agendas list of the 
+     * Edits an agenda. Replace an agenda into the agendas list of the 
      * AgendaManager by another agenda. For this method, the id of the agenda to
      * edit have to be the same that the agenda given in parameter.
      * @param agenda 
@@ -118,7 +142,7 @@ public class AgendaManager {
     }
     
     /**
-     * Ask information to connect to a google account and dysplay the list of all 
+     * Asks information to connect to a google account and dysplay the list of all 
      * calendars for this account.
      * @throws IOException
      * @throws ServiceException 
@@ -130,12 +154,13 @@ public class AgendaManager {
 //        System.out.print("login : ");
 //        String login = cin.next();
 //        
-//        System.out.print("password : ");
-//        String passwd = cin.next();
+        System.out.print("password : ");
+        String passwd = cin.next();
         
-        URL url = NetworkTools.authTo(Services.GOOGLE, "maelbar44@gmail.com", "******");
+        URL url = NetworkTools.authTo(Services.GOOGLE, "maelbar44@gmail.com", passwd);
         
         tools.googleTools.Tools.printUserCalendars(url);
+        
     }
     
 }

@@ -9,5 +9,5 @@ package agenda;
  * @author mael
  */
 public enum Services {
-    GOOGLE;
+    GOOGLE,LOCALHOST;
 }

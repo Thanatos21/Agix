@@ -15,86 +15,96 @@ public class Evt {
     private String id;
     private Date startDate;
     private Date endDate;
-    private HashMap<String, String> match;
+    private HashMap<String, String> matches;
     
     public Evt(String id, Date start, Date end){
         this.id = id;
         this.startDate = start;
         this.endDate = end;
-        match = new HashMap<>();
+        matches = new HashMap<>();
     }
     
     
-    /**
-     * This method allow you to add an entry to the match attribute
-     */
-    public void addMatch(String key, String value) {
-        match.put(key, value);
-    }
-    
-    /**
-     * Getter for id
+ /**
+     * Return the id of the event
      * @return id
      */
     public String getId() {
         return id;
     }
-    
+
     /**
-     * Getter for startDate
+     * Return the starting date of the event
      * @return startDate
      */
     public Date getStartDate() {
         return startDate;
     }
-    
+
     /**
-     * Getter for endDate
+     * Return the ending date of the event
      * @return endDate
      */
     public Date getEndDate() {
         return endDate;
     }
-    
+
     /**
-     * Getter for match
-     * @return match
+     * Return the HashMap wich contains all the matches of the event
+     * @return matches
      */
     public HashMap<String, String> getMatch() {
-        return match;
+        return matches;
     }
-    
-    
+
     /**
-     * Setter for id
-     * @param id 
+     * Set the id of the Event
+     * @param id
      */
     public void setId(String id) {
         this.id = id;
     }
-    
+
     /**
-     * Setter for startDate
-     * @param startDate 
+     *Set the starting date of the event
+     * @param startDate
      */
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-    
+
     /**
-     * Setter for endDate
-     * @param endDate 
+     * Set the ending date of the event
+     * @param endDate
      */
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    /**
+     * Set the HashMap matches
+     * @param matches
+     */
+    public void setMatches(HashMap<String, String> matches) {
+        this.matches = matches;
+    }
     
     /**
-     * Setter for match
-     * @param match 
+     * Add a new entry in the event matches
+     * @param key
+     * @param value
      */
-    public void setMatch(HashMap<String, String> match) {
-        this.match = match;
+    public void addMatch(String key, String value){
+        this.matches.put(key, value);
+    }
+    
+    
+    /**
+     * Remove a match from the event matches
+     * @param key
+     */
+    public void removeMatch(String key){
+        this.matches.remove(key);
     }
 
     /**
@@ -103,6 +113,6 @@ public class Evt {
      */
     @Override
     public String toString() {
-        return "Evt{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", match=" + match + '}';
+        return "Evt{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", match=" + matches + '}';
     }
 }

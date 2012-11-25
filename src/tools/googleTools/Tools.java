@@ -4,19 +4,20 @@
  */
 package tools.googleTools;
 
-import agenda.Services;
+import agenda.Agenda;
 import com.google.gdata.client.calendar.CalendarService;
-import com.google.gdata.data.ExtensionProfile;
 import com.google.gdata.data.Link;
+import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.calendar.CalendarFeed;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
-import com.sun.xml.internal.bind.marshaller.XMLWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import tools.NetworkTools;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -79,12 +80,35 @@ public class Tools {
       CalendarEntry entry = resultFeed.getEntries().get(i);
 
       System.out.println("\t" + entry.getTitle().getPlainText());
+      
       try{
-    System.out.println(entry.getLink("alternate", null).getHref());
+          for(Link l : entry.getLinks()){
+              System.out.println(l.getHref());
+          }
       }catch(Exception e){
           
       } 
     }
+  }
+  
+ /**
+   * Creates a new secondary calendar using the owncalendars feed.
+   * Make sure that you are authentified before executing this method.
+   * @return The newly created calendar entry.
+   * @throws IOException If there is a problem communicating with the server.
+   * @throws ServiceException If the service is unable to handle the request.
+   */
+  public static CalendarEntry createCalendar(Agenda agenda)
+      throws IOException, ServiceException {
+    System.out.println("Creating " + agenda.getTitle() + " calendar into the current account");
+
+    // Create the calendar
+    CalendarEntry calendar = new CalendarEntry();
+    calendar.setTitle(new PlainTextConstruct(agenda.getTitle()));
+    calendar.setSummary(new PlainTextConstruct(agenda.getSummary()));
+
+    // Insert the calendar
+    return calServ.insert(owncalendarsFeedUrl, calendar);
   }
     
   /**
@@ -99,8 +123,8 @@ public class Tools {
 
         // Create necessary URL objects
         try {
-          allcalendarsFeedUrl = new URL(METAFEED_URL_BASE + login + 
-              ALLCALENDARS_FEED_URL_SUFFIX);
+          owncalendarsFeedUrl = new URL(METAFEED_URL_BASE + login + 
+              OWNCALENDARS_FEED_URL_SUFFIX);
           
         } catch (MalformedURLException e) {
             // Bad URL
@@ -114,7 +138,7 @@ public class Tools {
 
         try {
           calServ.setUserCredentials(login, passwd);
-          return allcalendarsFeedUrl;
+          return owncalendarsFeedUrl;
         } catch (AuthenticationException e) {
           // Invalid credentials
           e.printStackTrace();
@@ -122,5 +146,57 @@ public class Tools {
         }
         
       }
+  
+    /**
+    * Deletes the given calendar entry.
+    * Make sure that you have used authTo before this method
+    * 
+    * @param calendar The calendar entry to delete.
+    * @throws IOException If there is a problem communicating with the server.
+    * @throws ServiceException If the service is unable to handle the request.
+    */
+    public static void removeCalendar(Agenda agenda) throws IOException, ServiceException {
+      
+        System.out.println("Deleting " + agenda.getTitle() + " from the current account");
+            
+        CalendarFeed resultFeed = calServ.getFeed(owncalendarsFeedUrl, CalendarFeed.class);
+        List<CalendarEntry> entries = resultFeed.getEntries();
+        
+        int i = 0;
+        boolean ok = false;
+        CalendarEntry entry = null;
+        while(!ok && i < entries.size()){
+            
+            entry = entries.get(i);
+            if(entry.getTitle().toString().equals(agenda.toString())){
+                ok = true;
+            }
+            i++;
+        }
+        
+        if(ok)
+            entry.delete();
+        
+    }
+    
+    public static void main(String args[]){
+        try {
+            authTo("maelbar44@gmail.com", "surfman11");
+        } catch (IOException ex) {
+            Logger.getLogger(Tools.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ServiceException ex) {
+            Logger.getLogger(Tools.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Agenda ag = new Agenda("1","","");
+        ag.setTitle("Agix");
+        try {
+            removeCalendar(ag);
+        } catch (IOException ex) {
+            Logger.getLogger(Tools.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ServiceException ex) {
+            Logger.getLogger(Tools.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
   
 }
