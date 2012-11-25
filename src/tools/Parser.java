@@ -16,15 +16,16 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author mael
+ * @author julien
  */
 public class Parser {
     public String Lix2Ical(String filePath) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(filePath));
         Evt evenement;
+        String line;
         
         while ( scanner.hasNext() ) {
-            String line = scanner.nextLine();
+            line = scanner.nextLine();
             
             // Si la ligne est vide, line.charAt(0) lance une exception...
             // Java ne connait pas '\n'
@@ -49,10 +50,54 @@ public class Parser {
                     }
                     nameEvt = new String(line.substring(i));
                     
+                    evenement = new Evt(line, start, end);
                     
-                    // Adding the new event
-                    evenement = new Evt(nameEvt, start, end);
-                    //System.out.println(evenement.toString());
+                    while ( ( scanner.hasNext() ) && ( line.charAt(1) != '*' ) ) {
+                        line = scanner.nextLine();
+                        
+                        switch ( line.charAt(0) ) {
+                            // Adding a "match"
+                            case 'm' :
+                                int matchKeyStart = 1;
+                                int matchKeyEnd;
+                                String matchKey;
+                                
+                                int matchValueStart;
+                                String matchValue;
+                                
+                                while ( line.charAt(matchKeyStart) != '^' ) {
+                                    matchKeyStart++;
+                                }
+                                matchKeyStart+=2;
+                                
+                                matchKeyEnd = matchKeyStart;
+                                while ( line.charAt(matchKeyEnd) != ')' ) {
+                                    matchKeyEnd++;
+                                }
+                                
+                                matchKey = line.substring(matchKeyStart,matchKeyEnd);
+                                
+                                matchValueStart = matchKeyEnd + 1;
+                                while ( line.charAt(matchValueStart) == ':' || line.charAt(matchValueStart) == ' ' ) {
+                                    matchValueStart++;
+                                }
+                                
+                                matchValue = line.substring(matchValueStart);
+                                
+                                evenement.addMatch(matchKey, matchValue);
+                                System.out.println(evenement.toString());
+                                
+                                break;
+                            
+                            // Adding a date (start or end)
+                            case 'd' :
+                                break;
+                            
+                            // Default case, we do nothing
+                            default :
+                                break;
+                        }
+                    }
                     
                     break;
                     
@@ -96,11 +141,12 @@ public class Parser {
         Parser instance = new Parser();
         Scanner cin = new Scanner(System.in);
         
-        System.out.println("Entrez l'adresse du fichier ICS: ");
-        String filePath = cin.next();
+//        System.out.println("Entrez l'adresse du fichier ICS: ");
+//        String filePath = cin.next();
+        String filePath = "C:\\Users\\Julien\\Documents\\NetBeansProjects\\genieLog\\test.lix";
         
         try {
-            String result = instance.Ical2Lix(filePath, "C:\\Users\\Julien\\Documents\\NetBeansProjects\\genieLog\\g28556.lix");
+            String result = instance.Lix2Ical(filePath);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
         }

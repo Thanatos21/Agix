@@ -21,6 +21,7 @@ public class Evt {
         this.id = id;
         this.startDate = start;
         this.endDate = end;
+        match = new HashMap<>();
     }
     
     
