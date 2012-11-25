@@ -179,24 +179,6 @@ public class Tools {
         
     }
     
-    public static void main(String args[]){
-        try {
-            authTo("maelbar44@gmail.com", "surfman11");
-        } catch (IOException ex) {
-            Logger.getLogger(Tools.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ServiceException ex) {
-            Logger.getLogger(Tools.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Agenda ag = new Agenda("1","","");
-        ag.setTitle("Agix");
-        try {
-            removeCalendar(ag);
-        } catch (IOException ex) {
-            Logger.getLogger(Tools.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ServiceException ex) {
-            Logger.getLogger(Tools.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
   
 }
