@@ -133,7 +133,7 @@ public class AgendaManager {
 //        System.out.print("password : ");
 //        String passwd = cin.next();
         
-        URL url = NetworkTools.authTo(Services.GOOGLE, "maelbar44@gmail.com", "surfman11");
+        URL url = NetworkTools.authTo(Services.GOOGLE, "maelbar44@gmail.com", "******");
         
         tools.googleTools.Tools.printUserCalendars(url);
     }
