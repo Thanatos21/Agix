@@ -140,9 +140,7 @@ public class AgendaManager {
         // In the second step we replace the agenda.
         this.agendas.set(i, agenda);
     }
-    
-    
-    
+       
     /**
      * Asks information to connect to a google account and dysplay the list of all 
      * calendars for this account.

@@ -8,6 +8,7 @@ import agenda.AgendaManager;
 import agenda.Services;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,34 +19,34 @@ import java.util.logging.Logger;
 public class Main {
 
     /**
+     * Display the main menu of the application.
+     */
+    private static void displayMenu(){
+        
+        Scanner cin = new Scanner(System.in);
+        
+        System.out.println("################################");
+        System.out.println("##            AGIX            ##");
+        System.out.println("################################");
+        System.out.println("##                            ##");
+        System.out.println("##  1 - Create a new Agenda   ##");
+        System.out.println("##  2 - Edit an Agenda        ##");
+        System.out.println("##  3 - Delete an Agenda      ##");
+        System.out.println("##  ------------------------- ##");
+        System.out.print("##  Action :  ");
+        int action = cin.nextInt();
+        System.out.println("################################");
+
+
+    }
+    
+    /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
         
             AgendaManager manager = AgendaManager.getInstance();
-        try {
-            //            System.out.println(System.getProperty("http.proxyHost"));
-            //            System.out.println(System.getProperty("http.proxyPort"));
-            //            System.out.println(System.getProperty("http.proxyUser"));
-            //            System.out.println(System.getProperty("http.proxyPassword"));
-                        
-            //            manager.configProxy();
-                        
-            //            System.out.println(System.getProperty("http.proxyHost"));
-            //            System.out.println(System.getProperty("http.proxyPort"));
-            //            System.out.println(System.getProperty("http.proxyUser"));
-            //            System.out.println(System.getProperty("http.proxyPassword"));
-                        
-            //         manager.getAgenda();
-                        
-         manager.getAgendasList(Services.GOOGLE);
-         manager.getAgendasList(Services.LOCALHOST);
-         
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ServiceException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            displayMenu();
     }
 }
