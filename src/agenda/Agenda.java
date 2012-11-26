@@ -5,13 +5,16 @@
 package agenda;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
  * @author mael
  */
 public class Agenda {
+    
     private String id;
     private String dest;
     private String src;
@@ -36,9 +39,40 @@ public class Agenda {
      * Make sure that you are using this method with .lix or .ics
      * @param file
      */
-    public Agenda(File file) {
+    public Agenda(File file) throws FileNotFoundException {
         if(file.getName().endsWith(".lix")){
+            Scanner scanner = new Scanner(file);
+            Evt evenement;
+            String line;
+
+            while ( scanner.hasNext() ) {
+                line = scanner.nextLine();
+
+                if(line.contains("title")){
+                    
+                }
+                
+                if(line.contains("source")){
+                    
+                }
+                
+                if(line.contains("dest")){
+                    
+                }
+                
+                if(line.contains("*")){
+                    
+                }
+                        
+
+                }
+
+                //System.out.println(line);
             
+
+            System.out.println("Lix2Ical Done!");
+
+            scanner.close();
         }
         else{
             if(file.getName().endsWith(".ics")){
