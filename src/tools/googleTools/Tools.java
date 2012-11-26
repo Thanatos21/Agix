@@ -6,7 +6,6 @@ package tools.googleTools;
 
 import agenda.Agenda;
 import com.google.gdata.client.calendar.CalendarService;
-import com.google.gdata.data.Link;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.calendar.CalendarFeed;
@@ -16,90 +15,58 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Scanner;
 
 /**
- *
+ * This class Provides methode to manage Google calendar.
  * @author mael
  */
 public class Tools {
     
-    // The base URL for a user's calendar metafeed (needs a username appended).
-    private static String METAFEED_URL_BASE = 
-            "https://www.google.com/calendar/feeds/";
-
-    // The string to add to the user's metafeedUrl to access the allcalendars
-    // feed.
-    private static String ALLCALENDARS_FEED_URL_SUFFIX = 
-        "/allcalendars/full";
-
-    // The string to add to the user's metafeedUrl to access the owncalendars
-    // feed.
-    private static String OWNCALENDARS_FEED_URL_SUFFIX = 
-        "/owncalendars/full";
-
-    // The string to add to the user's metafeedUrl to access the owncalendars
-    // feed.
-    private static String ICS_URL_SUFFIX = 
-        "/public/basic.ics";
-    
-    // The URL for the metafeed of the specified user.
-    // (e.g. http://www.google.com/feeds/calendar/jdoe@gmail.com)
+    private static String METAFEED_URL_BASE = "https://www.google.com/calendar/feeds/";
+    private static String ALLCALENDARS_FEED_URL_SUFFIX = "/allcalendars/full";
+    private static String OWNCALENDARS_FEED_URL_SUFFIX = "/owncalendars/full";  
     private static URL metafeedUrl = null;
-
-    // The URL for the allcalendars feed of the specified user.
-    // (e.g. http://www.googe.com/feeds/calendar/jdoe@gmail.com/allcalendars/full)
     private static URL allcalendarsFeedUrl = null;
-
-    // The URL for the owncalendars feed of the specified user.
-    // (e.g. http://www.googe.com/feeds/calendar/jdoe@gmail.com/owncalendars/full)
-    private static URL owncalendarsFeedUrl = null;
-    
-    // The URL for the owncalendars feed of the specified user.
-    // (e.g. http://www.googe.com/calendar/ical/idimport.calendar.google.com/public/basic.ics)
-    private static URL icsUrl = null;
-    
+    private static URL owncalendarsFeedUrl = null;  
     private static CalendarService calServ = null;
     
-    /**
-   * Prints the titles of calendars in the feed specified by the given URL.
-   * 
-   * @param service An authenticated CalendarService object.
-   * @param feedUrl The URL of a calendar feed to retrieve.
-   * @throws IOException If there is a problem communicating with the server.
-   * @throws ServiceException If the service is unable to handle the request.
-   */
-  public static void printUserCalendars(URL feedUrl)
+   /**
+    * Prints the titles of calendars in owncalendarsFeedUrl.
+    * 
+    * @throws IOException If there is a problem communicating with the server.
+    * @throws ServiceException If the service is unable to handle the request.
+    */
+  public static void printUserCalendars()
       throws IOException, ServiceException {
-    // Send the request and receive the response:
-    CalendarFeed resultFeed = calServ.getFeed(feedUrl, CalendarFeed.class);
-    
-    // Print the title of each calendar
-    for (int i = 0; i < resultFeed.getEntries().size(); i++) {
-      CalendarEntry entry = resultFeed.getEntries().get(i);
-
-      System.out.println("\t" + entry.getTitle().getPlainText());
       
-      try{
-          for(Link l : entry.getLinks()){
-              System.out.println(l.getHref());
-          }
-      }catch(Exception e){
-          
-      } 
-    }
+
+        connect();
+      
+        // Send the request and receive the response:
+        CalendarFeed resultFeed = calServ.getFeed(owncalendarsFeedUrl, CalendarFeed.class);
+
+        // Print the title of each calendar
+        for (int i = 0; i < resultFeed.getEntries().size(); i++) {
+          CalendarEntry entry = resultFeed.getEntries().get(i);
+          System.out.println("\t" + entry.getTitle().getPlainText());
+           
+        }
+        
+        disconnect();
   }
   
  /**
-   * Creates a new secondary calendar using the owncalendars feed.
-   * Make sure that you are authentified before executing this method.
-   * @return The newly created calendar entry.
+   * Creates a new calendar using the owncalendars feed.
+   * @param agenda 
    * @throws IOException If there is a problem communicating with the server.
    * @throws ServiceException If the service is unable to handle the request.
    */
-  public static CalendarEntry createCalendar(Agenda agenda)
-      throws IOException, ServiceException {
+  public static void createCalendar(Agenda agenda) 
+        throws IOException, ServiceException {
+      
+    connect();
+      
     System.out.println("Creating " + agenda.getTitle() + " calendar into the current account");
 
     // Create the calendar
@@ -108,55 +75,22 @@ public class Tools {
     calendar.setSummary(new PlainTextConstruct(agenda.getSummary()));
 
     // Insert the calendar
-    return calServ.insert(owncalendarsFeedUrl, calendar);
-  }
+    calServ.insert(owncalendarsFeedUrl, calendar);
     
-  /**
-   * Return the URL to get the list of all calendar on the google account.
-   * @param login
-   * @param passwd
-   * @throws IOException
-   * @throws ServiceException 
-   * @return owncalendarsFeedUrl 
-   */
-  public static URL authTo(String login, String passwd) throws IOException, ServiceException{
-
-        // Create necessary URL objects
-        try {
-          owncalendarsFeedUrl = new URL(METAFEED_URL_BASE + login + 
-              OWNCALENDARS_FEED_URL_SUFFIX);
-          
-        } catch (MalformedURLException e) {
-            // Bad URL
-            System.err.println("Uh oh - you've got an invalid URL.");
-            e.printStackTrace();
-            return null;
-        }
-
-        // Create CalendarService and authenticate using ClientLogin
-        calServ = new CalendarService("kissFairyCorporation-agix-1.0");
-
-        try {
-          calServ.setUserCredentials(login, passwd);
-          return owncalendarsFeedUrl;
-        } catch (AuthenticationException e) {
-          // Invalid credentials
-          e.printStackTrace();
-          return null;
-        }
-        
-      }
-  
-    /**
-    * Deletes the given calendar entry.
-    * Make sure that you have used authTo before this method
+    disconnect();
+  }
+   
+   /**
+    * Deletes the given Agenda.
     * 
-    * @param calendar The calendar entry to delete.
+    * @param agenda 
     * @throws IOException If there is a problem communicating with the server.
     * @throws ServiceException If the service is unable to handle the request.
     */
     public static void removeCalendar(Agenda agenda) throws IOException, ServiceException {
       
+        connect();
+        
         System.out.println("Deleting " + agenda.getTitle() + " from the current account");
             
         CalendarFeed resultFeed = calServ.getFeed(owncalendarsFeedUrl, CalendarFeed.class);
@@ -177,8 +111,55 @@ public class Tools {
         if(ok)
             entry.delete();
         
+        disconnect();    
     }
-    
+  
+  /**
+   * Ask information to authentified the user to his account and initialize 
+   * the owncalendarsFeedUrl.
+   * @throws IOException
+   * @throws ServiceException 
+   */
+  private static void connect() throws IOException, ServiceException{
+        Scanner cin = new Scanner(System.in);
 
+//        System.out.print("login : ");
+        String login = "maelbar44@gmail.com";//cin.next();
+
+        System.out.print("password : ");
+        String passwd = cin.next();
+        
+        // Create necessary URL objects
+        try {
+          owncalendarsFeedUrl = new URL(METAFEED_URL_BASE + login + 
+              OWNCALENDARS_FEED_URL_SUFFIX);
+          
+        } catch (MalformedURLException e) {
+            // Bad URL
+            System.err.println("Uh oh - you've got an invalid URL.");
+            e.printStackTrace();
+        }
+
+        // Create CalendarService and authenticate using ClientLogin
+        calServ = new CalendarService("kissFairyCorporation-agix-1.0");
+
+        try {
+          calServ.setUserCredentials(login, passwd);
+        } catch (AuthenticationException e) {
+          // Invalid credentials
+          e.printStackTrace();
+        }
+        
+      }
+  
+  /**
+   * Disconnect the user from the current google account.
+   */
+    private static void disconnect(){
+        calServ = null;
+        metafeedUrl = null;
+        allcalendarsFeedUrl = null;
+        owncalendarsFeedUrl = null;
+    }
   
 }
