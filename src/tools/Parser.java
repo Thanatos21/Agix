@@ -13,99 +13,43 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
  * @author julien
  */
 public class Parser {
-    public String Lix2Ical(String filePath) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(filePath));
-        Evt evenement;
-        String line;
+    
+    public String Lix2Ical(File file) throws FileNotFoundException {
+        Scanner scanner = new Scanner(file);
+        String line1;
         
         while ( scanner.hasNext() ) {
-            line = scanner.nextLine();
+            line1 = scanner.nextLine();
             
-            // Si la ligne est vide, line.charAt(0) lance une exception...
-            // Java ne connait pas '\n'
-            switch ( line.charAt(0) ) {
-                // Adding the source of the agenda
-                case 's' :
-                    break;
-                    
-                // Adding the destination
-                case 'd' :
-                    break;
-                
-                // A wild new event appears!
-                case '*' :
-                    int i = 1;
-                    Date start = new Date();
-                    Date end = new Date();
-                    String nameEvt;
-                    
-                    while ( line.charAt(i) == ' ' ) {
-                        i++;
-                    }
-                    nameEvt = new String(line.substring(i));
-                    
-                    evenement = new Evt(line, start, end);
-                    
-                    while ( ( scanner.hasNext() ) && ( line.charAt(1) != '*' ) ) {
-                        line = scanner.nextLine();
-                        
-                        switch ( line.charAt(0) ) {
-                            // Adding a "match"
-                            case 'm' :
-                                int matchKeyStart = 1;
-                                int matchKeyEnd;
-                                String matchKey;
-                                
-                                int matchValueStart;
-                                String matchValue;
-                                
-                                while ( line.charAt(matchKeyStart) != '^' ) {
-                                    matchKeyStart++;
-                                }
-                                matchKeyStart+=2;
-                                
-                                matchKeyEnd = matchKeyStart;
-                                while ( line.charAt(matchKeyEnd) != ')' ) {
-                                    matchKeyEnd++;
-                                }
-                                
-                                matchKey = line.substring(matchKeyStart,matchKeyEnd);
-                                
-                                matchValueStart = matchKeyEnd + 1;
-                                while ( line.charAt(matchValueStart) == ':' || line.charAt(matchValueStart) == ' ' ) {
-                                    matchValueStart++;
-                                }
-                                
-                                matchValue = line.substring(matchValueStart);
-                                
-                                evenement.addMatch(matchKey, matchValue);
-                                System.out.println(evenement.toString());
-                                
-                                break;
-                            
-                            // Adding a date (start or end)
-                            case 'd' :
-                                break;
-                            
-                            // Default case, we do nothing
-                            default :
-                                break;
-                        }
-                    }
-                    
-                    break;
-                    
-                default :
-                    break;
+            if ( line1.matches("^source( )*=( )*.*") ) {
+                String source = (line1.split("^source( )*=( )*"))[1];
+                System.out.println(source);
             }
             
-            //System.out.println(line);
+            if ( line1.matches("^dest( )*=( )*.*") ) {
+                String dest = (line1.split("^dest( )*=( )*"))[1];
+                System.out.println(dest);
+            }
+            
+            if ( line1.matches( "^match.*" ) ) {
+                String matchKey = ((line1.split("^match( )*=( )*\\^\\(")[1]).split("\\)"))[0];
+                System.out.println(matchKey);
+                
+                String matchValue = (line1.split("( )*:( )*"))[1];
+                System.out.println(matchValue);
+            }
+            
+            if ( line1.matches("\\*") ) {
+                System.out.println("lolilol");
+            }
         }
         
         System.out.println("Lix2Ical Done!");
@@ -135,20 +79,4 @@ public class Parser {
         return "";
     }
     
-    
-    
-    public static void main(String[] args) throws IOException {
-        Parser instance = new Parser();
-        Scanner cin = new Scanner(System.in);
-        
-//        System.out.println("Entrez l'adresse du fichier ICS: ");
-//        String filePath = cin.next();
-        String filePath = "C:\\Users\\Julien\\Documents\\NetBeansProjects\\genieLog\\test.lix";
-        
-        try {
-            String result = instance.Lix2Ical(filePath);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Parser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }
