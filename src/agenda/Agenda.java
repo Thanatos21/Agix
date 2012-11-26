@@ -4,6 +4,7 @@
  */
 package agenda;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +29,24 @@ public class Agenda {
         this.id = id;
         this.dest = dest;
         this.src = src;
+    }
+    
+    /**
+     * Constructs an Agenda according to the file given.
+     * Make sure that you are using this method with .lix or .ics
+     * @param file
+     */
+    public Agenda(File file) {
+        if(file.getName().endsWith(".lix")){
+            
+        }
+        else{
+            if(file.getName().endsWith(".ics")){
+                
+            }else{
+                System.err.println("Unsupported file.");
+            }
+        }
     }
 
     /**

@@ -62,7 +62,9 @@ public class Tools {
     * Prints the titles of calendars in owncalendarsFeedUrl.
     * 
     */
-    public static void printUserCalendar() {
+    public static ArrayList<String> printUserCalendar() {
+        
+        ArrayList<String> agendas = new ArrayList<>();
         
         //get all file from the local folder
         String [] files;
@@ -70,9 +72,11 @@ public class Tools {
         files = folder.list();
         for(String file : files){  
             if(file.endsWith(".lix")){
-                System.out.println(file.substring(0,file.length()-4));
+                agendas.add(file.substring(0,file.length()-4));
             }
-        }      
+        } 
+        
+        return agendas;
     }
     
     

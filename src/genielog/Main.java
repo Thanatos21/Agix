@@ -152,8 +152,10 @@ public class Main {
                 }while(!validService);
                 try {
                     if(service != Services.LOCALHOST) askAuthentication();
-                    AgendaManager.getInstance().getAgendasList(service);
-                } catch (Exception ex) {
+                    for(String agenda : AgendaManager.getInstance().getAgendasList(service)){
+                        System.out.println("##  * " + agenda);
+                    }
+                } catch (IOException | ServiceException ex) {
                     System.err.println("Error in authentication process");
                 }
                 break;

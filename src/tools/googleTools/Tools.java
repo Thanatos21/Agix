@@ -15,6 +15,7 @@ import com.google.gdata.util.ServiceException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,23 +42,26 @@ public class Tools {
     * @throws IOException If there is a problem communicating with the server.
     * @throws ServiceException If the service is unable to handle the request.
     */
-  public static void printUserCalendars()
+  public static ArrayList<String> printUserCalendars()
       throws IOException, ServiceException {
       
-
         connect();
       
         // Send the request and receive the response:
         CalendarFeed resultFeed = calServ.getFeed(owncalendarsFeedUrl, CalendarFeed.class);
 
+        ArrayList<String> agendas = new ArrayList<>();
+        
         // Print the title of each calendar
         for (int i = 0; i < resultFeed.getEntries().size(); i++) {
           CalendarEntry entry = resultFeed.getEntries().get(i);
-          System.out.println("\t" + entry.getTitle().getPlainText());
-           
+          agendas.add(entry.getTitle().getPlainText());      
         }
-        
+               
         disconnect();
+        
+        return agendas;
+
   }
   
  /**

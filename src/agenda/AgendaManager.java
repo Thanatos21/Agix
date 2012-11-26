@@ -80,10 +80,6 @@ public class AgendaManager {
         return password;
     }
     
-    
-    
-    
-    
     /**
      * Configuration of the proxy if need.
      */
@@ -129,7 +125,7 @@ public class AgendaManager {
      */
     public void addAgenda(Agenda agenda, Services service) throws IOException, ServiceException{
         
-        this.agendas.add(agenda);
+//        this.agendas.add(agenda);
         
         switch(service){
             case GOOGLE:
@@ -148,7 +144,7 @@ public class AgendaManager {
      * @param agenda 
      */
     public void removeAgenda(Agenda agenda, Services service) throws IOException, ServiceException{
-        this.agendas.remove(agenda);
+//        this.agendas.remove(agenda);
         
         switch(service){
             case GOOGLE:
@@ -177,6 +173,10 @@ public class AgendaManager {
         // In the second step we replace the agenda.
         this.agendas.set(i, agenda);
     }
+    
+    public void importAgenda(Services service){
+        
+    }
        
     /**
      * Asks information to connect to a google account and dysplay the list of all 
@@ -184,19 +184,22 @@ public class AgendaManager {
      * @throws IOException
      * @throws ServiceException 
      */
-    public void getAgendasList(Services service) throws IOException, ServiceException{
+    public ArrayList<String> getAgendasList(Services service) throws IOException, ServiceException{
+        
+        ArrayList<String> agendaslist = new ArrayList<>();
         
         switch(service){
             case GOOGLE:
-                tools.googleTools.Tools.printUserCalendars();
+                agendaslist = tools.googleTools.Tools.printUserCalendars();
                 break;
             case LOCALHOST:
-                tools.localhostTools.Tools.printUserCalendar();
+                agendaslist = tools.localhostTools.Tools.printUserCalendar();
                 break;
                         
         }
         
-        
+        return agendaslist;
+            
     }
     
 }
