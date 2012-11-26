@@ -5,6 +5,7 @@
 package tools.googleTools;
 
 import agenda.Agenda;
+import agenda.AgendaManager;
 import com.google.gdata.client.calendar.CalendarService;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.calendar.CalendarEntry;
@@ -22,6 +23,9 @@ import java.util.Scanner;
  * @author mael
  */
 public class Tools {
+    
+    private static String login = null;
+    private static String passwd = null;
     
     private static String METAFEED_URL_BASE = "https://www.google.com/calendar/feeds/";
     private static String ALLCALENDARS_FEED_URL_SUFFIX = "/allcalendars/full";
@@ -121,23 +125,17 @@ public class Tools {
    * @throws ServiceException 
    */
   private static void connect() throws IOException, ServiceException{
-        Scanner cin = new Scanner(System.in);
-
-//        System.out.print("login : ");
-        String login = "maelbar44@gmail.com";//cin.next();
-
-        System.out.print("password : ");
-        String passwd = cin.next();
         
+      login = AgendaManager.getInstance().getLogin();
+      passwd = AgendaManager.getInstance().getPassword();
+      
         // Create necessary URL objects
         try {
           owncalendarsFeedUrl = new URL(METAFEED_URL_BASE + login + 
               OWNCALENDARS_FEED_URL_SUFFIX);
           
         } catch (MalformedURLException e) {
-            // Bad URL
             System.err.println("Uh oh - you've got an invalid URL.");
-            e.printStackTrace();
         }
 
         // Create CalendarService and authenticate using ClientLogin
@@ -145,10 +143,7 @@ public class Tools {
 
         try {
           calServ.setUserCredentials(login, passwd);
-        } catch (AuthenticationException e) {
-          // Invalid credentials
-          e.printStackTrace();
-        }
+        } catch (AuthenticationException e) {}
         
       }
   
@@ -156,6 +151,9 @@ public class Tools {
    * Disconnect the user from the current google account.
    */
     private static void disconnect(){
+        login = null;
+        passwd = null;
+        
         calServ = null;
         metafeedUrl = null;
         allcalendarsFeedUrl = null;
