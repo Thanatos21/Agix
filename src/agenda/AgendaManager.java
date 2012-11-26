@@ -141,25 +141,26 @@ public class AgendaManager {
         this.agendas.set(i, agenda);
     }
     
+    
+    
     /**
      * Asks information to connect to a google account and dysplay the list of all 
      * calendars for this account.
      * @throws IOException
      * @throws ServiceException 
      */
-    public void googleAgendasList() throws IOException, ServiceException{
-        Scanner cin = new Scanner(System.in);
+    public void getAgendasList(Services service) throws IOException, ServiceException{
         
-        // Ask new Proxy Information
-//        System.out.print("login : ");
-//        String login = cin.next();
-//        
-        System.out.print("password : ");
-        String passwd = cin.next();
+        switch(service){
+            case GOOGLE:
+                tools.googleTools.Tools.printUserCalendars();
+                break;
+            case LOCALHOST:
+                tools.localhostTools.Tools.printUserCalendar();
+                break;
+                        
+        }
         
-        URL url = NetworkTools.authTo(Services.GOOGLE, "maelbar44@gmail.com", passwd);
-        
-        tools.googleTools.Tools.printUserCalendars(url);
         
     }
     

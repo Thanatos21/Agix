@@ -5,6 +5,7 @@
 package genielog;
 
 import agenda.AgendaManager;
+import agenda.Services;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -38,8 +39,8 @@ public class Main {
                         
             //         manager.getAgenda();
                         
-         manager.googleAgendasList();
-        
+         manager.getAgendasList(Services.GOOGLE);
+         manager.getAgendasList(Services.LOCALHOST);
          
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);

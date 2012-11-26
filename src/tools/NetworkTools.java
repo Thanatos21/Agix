@@ -87,18 +87,7 @@ public class NetworkTools {
         }
     }
     
-    /** Authentication to the service Using the login/passwd given in parameter.
-     * Return the URL to get the list of all calendar of the service for the given acount.
-     *  @return URL 
-     */
-    public static URL authTo(Services service, String login, String passwd) throws IOException, ServiceException{
-        switch(service){
-            case GOOGLE: 
-                return tools.googleTools.Tools.authTo(login, passwd);
-        }
-        
-        return null;    
-    }
+    
     
     public static void main(String args[]){
        
