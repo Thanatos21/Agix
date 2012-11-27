@@ -4,6 +4,7 @@
  */
 package tools;
 
+import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -41,10 +42,12 @@ public class ParserTest {
      */
     @Test
     public void testLix2Ical() throws Exception {
-        String filePath = "C:\\Users\\Julien\\Documents\\NetBeansProjects\\genieLog\\test.lix";
+        String filePath = "/home/julien/NetBeansProjects/Agix/test2.lix";
         Parser instance = new Parser();
         String expResult = "";
-        String result = instance.Lix2Ical(filePath);
+        
+        File file = new File(filePath);
+        String result = instance.Lix2Ical(file);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -55,22 +58,6 @@ public class ParserTest {
      */
     @Test
     public void testIcal2Lix() throws Exception {
-        System.out.println("Ical2Lix");
-        String icsFilePath = "";
-        String lixFilePath = "";
-        Parser instance = new Parser();
-        String expResult = "";
-        String result = instance.Ical2Lix(icsFilePath, lixFilePath);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of main method, of class Parser.
-     */
-    @Test
-    public void testMain() throws Exception {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
