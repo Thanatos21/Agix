@@ -135,7 +135,7 @@ public class Main {
                 stop = true;
                 break;
             case 1:
-                System.err.println("\tNot yet implemented...");
+                tools.NetworkTools.setUpProxy(null, null, null, null);
                 break;
             case 2:
                 System.err.println("\tNot yet implemented...");

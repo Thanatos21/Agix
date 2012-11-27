@@ -4,19 +4,17 @@
  */
 package tools;
 
-import agenda.Services;
-import com.google.gdata.client.calendar.CalendarService;
-import com.google.gdata.util.AuthenticationException;
-import com.google.gdata.util.ServiceException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.ProxySelector;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import tools.googleTools.Tools;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *
@@ -32,10 +30,44 @@ public class NetworkTools {
      * @param passwd
      */
     public static void setUpProxy(String host, String port, String username, String passwd){
-        System.getProperties().put("http.proxyHost", host);
-        System.getProperties().put("http.proxyPort", port);
+//        System.getProperties().put("http.proxyHost", host);
+//        System.getProperties().put("http.proxyPort", port);
 //        System.getProperties().put("http.proxyUser", username);
 //        System.getProperties().put("http.proxyPassword", passwd);
+        try {
+            
+            System.setProperty("java.net.useSystemProxies","true");
+            List l = ProxySelector.getDefault().select(
+                        new URI("http://www.google.com/"));
+            
+            for (Iterator iter = l.iterator(); iter.hasNext(); ) {
+                
+                Proxy proxy = (Proxy) iter.next();
+                
+                System.out.println("proxy hostname : " + proxy.type());
+                
+                InetSocketAddress addr = (InetSocketAddress)
+                    proxy.address();
+                
+                if(addr == null) {
+                    
+                    System.out.println("No Proxy");
+                    
+                } else {
+                    
+                    System.out.println("proxy hostname : " + 
+                            addr.getHostName());
+                    
+                    System.out.println("proxy port : " + 
+                            addr.getPort());
+                    
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
     }
     
    
@@ -90,7 +122,7 @@ public class NetworkTools {
     
     
     public static void main(String args[]){
-       
+       downloadFrom("https://www.edt-sciences.univ-nantes.fr/g6935.ics");
     }
     
 }
