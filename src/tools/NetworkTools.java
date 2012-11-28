@@ -4,6 +4,12 @@
  */
 package tools;
 
+import com.btr.proxy.search.ProxySearch;
+import com.btr.proxy.search.ProxySearch.Strategy;
+import com.btr.proxy.selector.pac.PacProxySelector;
+import com.btr.proxy.selector.pac.UrlPacScriptSource;
+import com.btr.proxy.util.PlatformUtil;
+import com.btr.proxy.util.PlatformUtil.Platform;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,45 +35,11 @@ public class NetworkTools {
      * @param username
      * @param passwd
      */
-    public static void setUpProxy(String host, String port, String username, String passwd){
-//        System.getProperties().put("http.proxyHost", host);
-//        System.getProperties().put("http.proxyPort", port);
-//        System.getProperties().put("http.proxyUser", username);
-//        System.getProperties().put("http.proxyPassword", passwd);
-        try {
-            
-            System.setProperty("java.net.useSystemProxies","true");
-            List l = ProxySelector.getDefault().select(
-                        new URI("http://www.google.com/"));
-            
-            for (Iterator iter = l.iterator(); iter.hasNext(); ) {
-                
-                Proxy proxy = (Proxy) iter.next();
-                
-                System.out.println("proxy hostname : " + proxy.type());
-                
-                InetSocketAddress addr = (InetSocketAddress)
-                    proxy.address();
-                
-                if(addr == null) {
-                    
-                    System.out.println("No Proxy");
-                    
-                } else {
-                    
-                    System.out.println("proxy hostname : " + 
-                            addr.getHostName());
-                    
-                    System.out.println("proxy port : " + 
-                            addr.getPort());
-                    
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        
+    public static void setUpProxy(String host, String port, String username, String passwd) throws IOException{        
+        UrlPacScriptSource pacScript = new UrlPacScriptSource("http://www.cri.univ-nantes.fr/cache.pac");
+        System.out.println(pacScript.getScriptContent());
+        PacProxySelector pacProxselect = new PacProxySelector(pacScript);
+        ProxySelector.setDefault(pacProxselect);
     }
     
    

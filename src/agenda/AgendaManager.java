@@ -83,7 +83,7 @@ public class AgendaManager {
     /**
      * Configuration of the proxy if need.
      */
-    public void configProxy(){
+    public void configProxy() throws IOException{
         
         Scanner cin = new Scanner(System.in);
         

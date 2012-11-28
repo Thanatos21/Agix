@@ -125,7 +125,7 @@ public class Main {
      * @param action
      * @return 
      */
-    private static boolean executeAction(int action){
+    private static boolean executeAction(int action) throws IOException{
         
         boolean stop = false;
         boolean validService;
@@ -172,9 +172,13 @@ public class Main {
      */
     public static void main(String[] args) {
        
-        boolean stop;  
+        boolean stop = false;  
         do{
-            stop = executeAction(displayMenu());
+            try {
+                stop = executeAction(displayMenu());
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }while(!stop);
         
     }
