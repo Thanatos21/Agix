@@ -7,6 +7,7 @@ package genielog;
 import agenda.AgendaManager;
 import agenda.Services;
 import com.google.gdata.util.ServiceException;
+import gui.Mainwindow;
 import java.io.Console;
 import java.io.IOException;
 import java.util.InputMismatchException;
@@ -172,21 +173,29 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       
-        System.out.println("Try scanner password");
-        Scanner sc = new Scanner(System.in);
+          
+        if(args.length > 0){
+            
+            if(args[0].compareTo("gui") == 0){
+                Mainwindow guiApp = new Mainwindow();
+                guiApp.setVisible(true);
+            }
+            else{
+                System.out.println("You have only two options to launch this application : ");
+                System.out.println("\"gui\" to launch with a graphical interface");
+                System.out.println("Or without argument to launch in a consol mode.");
+            }
+        }else{
         
-        
-        
-        
-//        boolean stop = false;  
-//        do{
-//            try {
-//                stop = executeAction(displayMenu());
-//            } catch (IOException ex) {
-//                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }while(!stop);
+            boolean stop = false;  
+            do{
+                try {
+                    stop = executeAction(displayMenu());
+                } catch (IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }while(!stop);
+        }
         
     }
     
