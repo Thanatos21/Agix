@@ -4,34 +4,21 @@
  */
 package tools;
 
-import agenda.Agenda;
-import agenda.Evt;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Scanner;
 import net.fortuna.ical4j.data.CalendarBuilder;
-import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Component;
 import net.fortuna.ical4j.model.ComponentList;
-import net.fortuna.ical4j.model.Date;
-import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.PropertyList;
 import net.fortuna.ical4j.model.ValidationException;
-import net.fortuna.ical4j.model.Validator;
-import net.fortuna.ical4j.model.component.CalendarComponent;
-import net.fortuna.ical4j.model.component.VEvent;
-import net.fortuna.ical4j.model.property.Method;
-import net.fortuna.ical4j.model.property.ProdId;
-import net.fortuna.ical4j.model.property.Version;
-import net.fortuna.ical4j.util.UidGenerator;
 
 /**
  * @author julien
@@ -47,14 +34,16 @@ public class Parser {
     public String Lix2Ical(File file) throws IOException, ValidationException {
         Scanner scanner = new Scanner(file);
         
-        Calendar calendar = new Calendar();
-        calendar.getProperties().add(new ProdId("Agix"));
-        calendar.getProperties().add(Version.VERSION_2_0);
+        File outputFile = new File("Lix2IcalResult");
+        if ( !outputFile.exists() ) {
+            outputFile.createNewFile();
+        }
         
-        VEvent comp = new VEvent(new DateTime(), "");
-//        UidGenerator ui = new UidGenerator("1");
-//        comp.getProperties().add(ui.generateUid());
-        calendar.getComponents().add(comp);
+        FileWriter writer = new FileWriter(outputFile);
+        
+        writer.write("BEGIN:VCALENDAR\n" + 
+                "VERSION:2.0\n" + 
+                "PRODID:-//www.celcat.fr//NONSGML CreateICSFiles//FR\n");
         
         String line;
         
@@ -62,15 +51,23 @@ public class Parser {
         String source;
         String dest;
         String eventId;
+        String date_start, date_end;
         String matchKey;
         String matchValue;
+        
+        boolean firstEvent = true;
         
         while ( scanner.hasNext() ) {
             line = scanner.nextLine();
             
             // found a new title
             if ( line.matches("^\\[.*\\]") ) {
-                title = (((line.split("^\\["))[1]).split("\\]"))[0];
+                try {
+                    title = (((line.split("^\\["))[1]).split("\\]"))[0];
+                    writer.write("X-WR-CALNAME:" + title + "\n");
+                } catch ( ArrayIndexOutOfBoundsException e ) {
+                    writer.write("X-WR-CALNAME:\n");
+                }
             }
             
             // found a new source
@@ -86,31 +83,59 @@ public class Parser {
             // found a new event
             if ( line.matches("\\*.*") ) {
                 eventId = (line.split("\\*( )*"))[1];
+                if ( firstEvent ) {
+                    writer.write("BEGIN:VEVENT\n");
+                    firstEvent = false;
+                } else {
+                    writer.write("END:VEVENT\n");
+                    writer.write("BEGIN:VEVENT\n");
+                }
             }
             
             // found a new match
             if ( line.matches( "^match( )*=( )*\\^\\(.*" ) ) {
-                matchKey = ((line.split("^match( )*=( )*\\^\\(")[1]).split("\\)"))[0];
-                matchValue = (line.split("( )*:( )*"))[1];
-                
+                try {
+                    matchKey = ((line.split("^match( )*=( )*\\^\\(")[1]).split("\\)"))[0];
+                    try {
+                        matchValue = ((line).split("^match( )*=( )*\\^\\(.*\\)( )*:( )*"))[1];
+                        writer.write(matchKey + ":" + matchValue + "\n");
+                    } catch ( ArrayIndexOutOfBoundsException e ) {
+                        writer.write(matchKey + ":\n");
+                    }
+                } catch ( ArrayIndexOutOfBoundsException e ) {
+                    System.err.println("There is no matchKey for this match");
+                }
             }
             
             // found a new date_start
             if ( line.matches("^date_start( )*=( )*.*") ) {
+                try {
+                    date_start = (line.split("^date_start( )*=( )*"))[1];
+                    writer.write("DTSTART:" + date_start + "\n");
+                } catch ( ArrayIndexOutOfBoundsException e ) {
+                    writer.write("DTSTART:\n");
+                }
             }
             
             // found a new date_end
             if ( line.matches("^date_end( )*=( )*.*") ) {
+                try {
+                    date_end = (line.split("^date_end( )*=( )*"))[1];
+                    writer.write("DTEND:" + date_end + "\n");
+                } catch ( ArrayIndexOutOfBoundsException e ) {
+                    writer.write("DTEND:\n");
+                }
             }
         }
+        
+        writer.write("END:VEVENT\n");
+        writer.write("END:VCALENDAR\n");
         
         System.out.println("Lix2Ical Done!");
         
         scanner.close();
-        
-//        FileOutputStream outputFile = new FileOutputStream("Lix2IcalResult");
-//        CalendarOutputter outputter = new CalendarOutputter();
-//        outputter.output(calendar, outputFile);
+        writer.flush();
+        writer.close();
         
         return "";
     }
