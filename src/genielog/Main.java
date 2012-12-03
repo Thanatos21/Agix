@@ -7,6 +7,7 @@ package genielog;
 import agenda.AgendaManager;
 import agenda.Services;
 import com.google.gdata.util.ServiceException;
+import java.io.Console;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -44,7 +45,6 @@ public class Main {
             int action = cin.nextInt();
             System.out.println("################################");
             return action;
-
         }catch(InputMismatchException e){}
         
         return -1;  
@@ -83,6 +83,7 @@ public class Main {
     private static void askAuthentication(){
         
         Scanner cin = new Scanner(System.in);
+        Console cons = System.console();
         
         System.out.println("################################");
         System.out.println("##  Authentication to " + service.toString() + " ##");
@@ -172,14 +173,20 @@ public class Main {
      */
     public static void main(String[] args) {
        
-        boolean stop = false;  
-        do{
-            try {
-                stop = executeAction(displayMenu());
-            } catch (IOException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }while(!stop);
+        System.out.println("Try scanner password");
+        Scanner sc = new Scanner(System.in);
+        
+        
+        
+        
+//        boolean stop = false;  
+//        do{
+//            try {
+//                stop = executeAction(displayMenu());
+//            } catch (IOException ex) {
+//                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }while(!stop);
         
     }
     
