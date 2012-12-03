@@ -4,77 +4,172 @@
  */
 package tools;
 
+import agenda.Agenda;
 import agenda.Evt;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import net.fortuna.ical4j.data.CalendarBuilder;
+import net.fortuna.ical4j.data.CalendarOutputter;
+import net.fortuna.ical4j.data.ParserException;
+import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.Component;
+import net.fortuna.ical4j.model.ComponentList;
+import net.fortuna.ical4j.model.Property;
+import net.fortuna.ical4j.model.PropertyList;
+import net.fortuna.ical4j.model.ValidationException;
+import net.fortuna.ical4j.model.Validator;
+import net.fortuna.ical4j.model.component.CalendarComponent;
+import net.fortuna.ical4j.model.property.Method;
+import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.Version;
 
 /**
- *
  * @author julien
  */
 public class Parser {
     
-    public String Lix2Ical(File file) throws FileNotFoundException {
+    /**
+     * Translates a Lix file into an Ical file
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public String Lix2Ical(File file) throws IOException, ValidationException {
         Scanner scanner = new Scanner(file);
-        String line1;
+        
+        Calendar calendar = new Calendar();
+        calendar.getProperties().add(new ProdId("Agix"));
+        calendar.getProperties().add(Version.VERSION_2_0);
+        
+        Component comp = new Component("test composant") {
+
+            @Override
+            public void validate(boolean bln) throws ValidationException {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
+        calendar.getComponents().add(comp);
+        
+        String line;
+        
+        String source;
+        String dest;
+        String eventId;
+        String matchKey;
+        String matchValue;
         
         while ( scanner.hasNext() ) {
-            line1 = scanner.nextLine();
+            line = scanner.nextLine();
             
-            if ( line1.matches("^source( )*=( )*.*") ) {
-                String source = (line1.split("^source( )*=( )*"))[1];
-                System.out.println(source);
+            // found a new source
+            if ( line.matches("^source( )*=( )*.*") ) {
+                source = (line.split("^source( )*=( )*"))[1];
             }
             
-            if ( line1.matches("^dest( )*=( )*.*") ) {
-                String dest = (line1.split("^dest( )*=( )*"))[1];
-                System.out.println(dest);
+            // found a new destination
+            if ( line.matches("^dest( )*=( )*.*") ) {
+                dest = (line.split("^dest( )*=( )*"))[1];
             }
             
-            if ( line1.matches( "^match.*" ) ) {
-                String matchKey = ((line1.split("^match( )*=( )*\\^\\(")[1]).split("\\)"))[0];
-                System.out.println(matchKey);
+            // found a new event
+            if ( line.matches("\\*.*") ) {
+                eventId = (line.split("\\*( )*"))[1];
+            }
+            
+            // found a new match
+            if ( line.matches( "^match( )*=( )*\\^\\(.*" ) ) {
+                matchKey = ((line.split("^match( )*=( )*\\^\\(")[1]).split("\\)"))[0];
+                matchValue = (line.split("( )*:( )*"))[1];
                 
-                String matchValue = (line1.split("( )*:( )*"))[1];
-                System.out.println(matchValue);
             }
             
-            if ( line1.matches("\\*") ) {
-                System.out.println("lolilol");
+            // found a new date_start
+            if ( line.matches("^date_start( )*=( )*.*") ) {
+                Date dateStart = new Date();
+            }
+            
+            // found a new date_end
+            if ( line.matches("^date_end( )*=( )*.*") ) {
+                Date dateEnd = new Date();
             }
         }
         
         System.out.println("Lix2Ical Done!");
         
         scanner.close();
+        
+        FileOutputStream outputFile = new FileOutputStream("Lix2IcalResult");
+        CalendarOutputter outputter = new CalendarOutputter();
+        outputter.output(calendar, outputFile);
         
         return "";
     }
     
     
     
-    public String Ical2Lix(String icsFilePath, String lixFilePath) throws FileNotFoundException, IOException {
-        Scanner scanner = new Scanner(new File(icsFilePath));
-        FileWriter writer = new FileWriter(new File(lixFilePath), false);
+    /**
+     * Translates an Ical file into a Lix file
+     * @param icsFilePath The relative or absolute adress of the Ical file to read
+     * @param lixFilePath The relative or absolute adress of the Lix file to write
+     * @return
+     * @throws IOException
+     */
+    public String Ical2Lix(String icsFilePath, String lixFilePath) throws FileNotFoundException, IOException, ParserException {
+        FileInputStream inputFile = new FileInputStream(icsFilePath);
         
-        while ( scanner.hasNext() ) {
-            String line = scanner.nextLine();
-            
-            writer.write(line);
+        CalendarBuilder builder = new CalendarBuilder();
+        
+        File outputFile = new File(lixFilePath);
+        if ( !outputFile.exists() ) {
+            outputFile.createNewFile();
         }
         
-        System.out.println("Lix2Ical Done!");
+        FileWriter writer = new FileWriter(outputFile);
+        // We have to add the source and the dest BEFORE the first while
         
-        scanner.close();
+        ComponentList eventsList;
+        PropertyList propertiesList;
+        Iterator itEvents, itProperties;
+        
+        Calendar cal = builder.build(inputFile);
+        eventsList = cal.getComponents();
+        itEvents = eventsList.iterator();
+        
+        while (itEvents.hasNext()) {
+            Component event = (Component) itEvents.next();
+            propertiesList = event.getProperties();
+            itProperties = propertiesList.iterator();
+            writer.write("* " + event.getProperty("UID").toString());
+            
+            while ( itProperties.hasNext() ) {
+                Property p = (Property) itProperties.next();
+                switch (p.getName()) {
+                    case "DTSTART":
+                        writer.write("date_start = " + p.getValue() + "\n");
+                        break;
+                        
+                    case "DTEND":
+                        writer.write("date_end = " + p.getValue() + "\n");
+                        break;
+                    
+                    default:
+                        writer.write("match = ^(" + p.getName() + "): " + p.getValue().replaceAll("\n", " - ") + "\n");
+                        break;
+                }
+            }
+        }
+        
+        writer.flush();
         writer.close();
+        
+        System.out.println("Ical2Lix Done!");
         
         return "";
     }

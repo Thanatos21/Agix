@@ -1,4 +1,4 @@
-# d’où vient le calendrier
+# d'où vient le calendrier
 source = http://www.edt-sciences.univ-nantes.fr/g20960.ics
 # synchronisation avec Google Calendar
 dest = http://google.com/calendar

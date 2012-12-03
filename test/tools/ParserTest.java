@@ -7,10 +7,10 @@ package tools;
 import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -42,15 +42,13 @@ public class ParserTest {
      */
     @Test
     public void testLix2Ical() throws Exception {
-        String filePath = "/home/julien/NetBeansProjects/Agix/test2.lix";
+        String filePath = "test2.lix";
         Parser instance = new Parser();
-        String expResult = "";
+        String result = "";
         
         File file = new File(filePath);
-        String result = instance.Lix2Ical(file);
-        assertEquals(expResult, result);
+        assertEquals(result, instance.Lix2Ical(file));
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -58,7 +56,10 @@ public class ParserTest {
      */
     @Test
     public void testIcal2Lix() throws Exception {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String filePath = "g28556.ics";
+        String result = "";
+        Parser instance = new Parser();
+        
+        assertEquals(result, instance.Ical2Lix(filePath, "ical2LixResult"));
     }
 }

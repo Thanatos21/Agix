@@ -1,0 +1,16 @@
+# d'où vient le calendrier
+source = http://www.edt-sciences.univ-nantes.fr/g20960.ics
+
+# synchronisation avec Google Calendar
+dest = http://google.com/calendar
+
+# synchronisation avec un programme local écoutant sur le port 7000
+dest = http://localhost:7000
+
+* r1
+match = ^(SUMMARY): X1G0010
+date_start = 2012-10-12
+
+* r2
+match = ^(SUMMARY): X1X0012
+date_end = 2013-03-01

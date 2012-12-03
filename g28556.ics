@@ -21,15 +21,6 @@ DESCRIPTION:Matière : X7II010 Génie Logiciel\nPersonnel : SUNYE\, Gerson\nGrou
 CATEGORIES:CELCAT Timetabler (vcal) - 2013
 END:VEVENT
 BEGIN:VEVENT
-DTSTART:20121203T070000Z
-DTEND:20121203T112000Z
-UID:CELCAT - 2013 (89005-15)
-SUMMARY:TD INFO - X7II010 Génie Logiciel\, M1ALMA - Architectures Logicielles\, M1ATAL
-LOCATION:sa U5 (Bât 2)
-DESCRIPTION:Matière : X7II010 Génie Logiciel\nPersonnel : SUNYE\, Gerson\nGroupe : M1ALMA - Architectures Logicielles\, M1ATAL\nSalle : sa U5 (Bât 2)\nRemarques : 12-24-12 \n
-CATEGORIES:CELCAT Timetabler (vcal) - 2013
-END:VEVENT
-BEGIN:VEVENT
 DTSTART:20120910T073000Z
 DTEND:20120910T085000Z
 UID:CELCAT - 2013 (83376-3)
@@ -183,9 +174,9 @@ DESCRIPTION:Matière : X7II010 Génie Logiciel\nPersonnel : SUNYE\, Gerson\nGrou
 CATEGORIES:CELCAT Timetabler (vcal) - 2013
 END:VEVENT
 BEGIN:VEVENT
-DTSTART:20121119T123000Z
-DTEND:20121119T143000Z
-UID:CELCAT - 2013 (91106-13)
+DTSTART:20121126T123000Z
+DTEND:20121126T143000Z
+UID:CELCAT - 2013 (91365-14)
 SUMMARY:TP INFO - X7II010 Génie Logiciel\, M1ALMA TPA
 LOCATION:salle info 2 (Bât 2)
 DESCRIPTION:Matière : X7II010 Génie Logiciel\nPersonnel : SUNYE\, Gerson\nGroupe : M1ALMA TPA\nSalle : salle info 2 (Bât 2)\nRemarques : 12-24-12  \n
@@ -194,10 +185,19 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20121203T123000Z
 DTEND:20121203T143000Z
-UID:CELCAT - 2013 (81793-15)
-SUMMARY:TP INFO - X7II030 Concepts et outils de développement\, M1ALMA TPA\, M1ALMA TPB
-LOCATION:salle Info 1 (Bât 2)
-DESCRIPTION:Matière : X7II030 Concepts et outils de développement\nPersonnel : GOUALARD\, Frédéric\nGroupe : M1ALMA TPA\, M1ALMA TPB\nSalle : salle Info 1 (Bât 2)\nRemarques : 16-16-16 \n
+UID:CELCAT - 2013 (91365-15)
+SUMMARY:TP INFO - X7II010 Génie Logiciel\, M1ALMA TPA
+LOCATION:salle info 2 (Bât 2)
+DESCRIPTION:Matière : X7II010 Génie Logiciel\nPersonnel : SUNYE\, Gerson\nGroupe : M1ALMA TPA\nSalle : salle info 2 (Bât 2)\nRemarques : 12-24-12  \n
+CATEGORIES:CELCAT Timetabler (vcal) - 2013
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20121210T123000Z
+DTEND:20121210T143000Z
+UID:CELCAT - 2013 (91365-16)
+SUMMARY:TP INFO - X7II010 Génie Logiciel\, M1ALMA TPA
+LOCATION:salle info 2 (Bât 2)
+DESCRIPTION:Matière : X7II010 Génie Logiciel\nPersonnel : SUNYE\, Gerson\nGroupe : M1ALMA TPA\nSalle : salle info 2 (Bât 2)\nRemarques : 12-24-12  \n
 CATEGORIES:CELCAT Timetabler (vcal) - 2013
 END:VEVENT
 BEGIN:VEVENT
@@ -266,7 +266,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20121022T120000Z
 DTEND:20121022T140000Z
-UID:CELCAT - 2013 (83576-9)
+UID:CELCAT - 2013 (91327-9)
 SUMMARY:TP INFO - X7II010 Génie Logiciel\, M1ALMA TPA
 LOCATION:salle I 121 (Bât 15-C I E)
 DESCRIPTION:Matière : X7II010 Génie Logiciel\nPersonnel : SUNYE\, Gerson\nGroupe : M1ALMA TPA\nSalle : salle I 121 (Bât 15-C I E)\nRemarques : 12-24-12  \n
@@ -275,19 +275,19 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20121112T130000Z
 DTEND:20121112T150000Z
-UID:CELCAT - 2013 (83576-12)
+UID:CELCAT - 2013 (91327-12)
 SUMMARY:TP INFO - X7II010 Génie Logiciel\, M1ALMA TPA
 LOCATION:salle I 121 (Bât 15-C I E)
 DESCRIPTION:Matière : X7II010 Génie Logiciel\nPersonnel : SUNYE\, Gerson\nGroupe : M1ALMA TPA\nSalle : salle I 121 (Bât 15-C I E)\nRemarques : 12-24-12  \n
 CATEGORIES:CELCAT Timetabler (vcal) - 2013
 END:VEVENT
 BEGIN:VEVENT
-DTSTART:20121126T143000Z
-DTEND:20121126T163000Z
-UID:CELCAT - 2013 (81794-14)
-SUMMARY:TP INFO - X7II030 Concepts et outils de développement\, M1ALMA TPA\, M1ALMA TPB
-LOCATION:salle Info 1 (Bât 2)
-DESCRIPTION:Matière : X7II030 Concepts et outils de développement\nPersonnel : GOUALARD\, Frédéric\nGroupe : M1ALMA TPA\, M1ALMA TPB\nSalle : salle Info 1 (Bât 2)\nRemarques : 16-16-16 \n
+DTSTART:20121119T130000Z
+DTEND:20121119T150000Z
+UID:CELCAT - 2013 (91364-13)
+SUMMARY:TP INFO - X7II010 Génie Logiciel\, M1ALMA TPA
+LOCATION:salle info 2 (Bât 2)
+DESCRIPTION:Matière : X7II010 Génie Logiciel\nPersonnel : SUNYE\, Gerson\nGroupe : M1ALMA TPA\nSalle : salle info 2 (Bât 2)\nRemarques : 12-24-12  \n
 CATEGORIES:CELCAT Timetabler (vcal) - 2013
 END:VEVENT
 BEGIN:VEVENT
@@ -673,8 +673,8 @@ DTSTART:20121127T130000Z
 DTEND:20121127T142000Z
 UID:CELCAT - 2013 (90309-14)
 SUMMARY:TD INFO - X7II020  Bases de données\, M1ALMA - Architectures Logicielles\, M1ATAL
-LOCATION:salle 024 (Bât. 18 - Sous-sol BU)
-DESCRIPTION:Matière : X7II020  Bases de données\nPersonnel : SKAF Hala\nGroupe : M1ALMA - Architectures Logicielles\, M1ATAL\nSalle : salle 024 (Bât. 18 - Sous-sol BU)\nRemarques :  16-20-12 - \n
+LOCATION:salle I 042 (Bât 14)
+DESCRIPTION:Matière : X7II020  Bases de données\nPersonnel : SKAF Hala\nGroupe : M1ALMA - Architectures Logicielles\, M1ATAL\nSalle : salle I 042 (Bât 14)\nRemarques :  16-20-12 - \n
 CATEGORIES:CELCAT Timetabler (vcal) - 2013
 END:VEVENT
 BEGIN:VEVENT
@@ -1032,33 +1032,6 @@ BEGIN:VEVENT
 DTSTART:20121114T143000Z
 DTEND:20121114T155000Z
 UID:CELCAT - 2013 (91252-12)
-SUMMARY:TD INFO - X7II030 Concepts et outils de développement\, M1ALMA - Architectures Logicielles\, M1ATAL
-LOCATION:Amphi 111 (Bât 26-Erdre RdC)
-DESCRIPTION:Matière : X7II030 Concepts et outils de développement\nPersonnel : GOUDIA Dalila\nGroupe : M1ALMA - Architectures Logicielles\, M1ATAL\nSalle : Amphi 111 (Bât 26-Erdre RdC)\nRemarques : 16-16-16 Gr2 (manque 1 séance) \n
-CATEGORIES:CELCAT Timetabler (vcal) - 2013
-END:VEVENT
-BEGIN:VEVENT
-DTSTART:20121128T143000Z
-DTEND:20121128T155000Z
-UID:CELCAT - 2013 (91252-14)
-SUMMARY:TD INFO - X7II030 Concepts et outils de développement\, M1ALMA - Architectures Logicielles\, M1ATAL
-LOCATION:Amphi 111 (Bât 26-Erdre RdC)
-DESCRIPTION:Matière : X7II030 Concepts et outils de développement\nPersonnel : GOUDIA Dalila\nGroupe : M1ALMA - Architectures Logicielles\, M1ATAL\nSalle : Amphi 111 (Bât 26-Erdre RdC)\nRemarques : 16-16-16 Gr2 (manque 1 séance) \n
-CATEGORIES:CELCAT Timetabler (vcal) - 2013
-END:VEVENT
-BEGIN:VEVENT
-DTSTART:20121205T143000Z
-DTEND:20121205T155000Z
-UID:CELCAT - 2013 (91252-15)
-SUMMARY:TD INFO - X7II030 Concepts et outils de développement\, M1ALMA - Architectures Logicielles\, M1ATAL
-LOCATION:Amphi 111 (Bât 26-Erdre RdC)
-DESCRIPTION:Matière : X7II030 Concepts et outils de développement\nPersonnel : GOUDIA Dalila\nGroupe : M1ALMA - Architectures Logicielles\, M1ATAL\nSalle : Amphi 111 (Bât 26-Erdre RdC)\nRemarques : 16-16-16 Gr2 (manque 1 séance) \n
-CATEGORIES:CELCAT Timetabler (vcal) - 2013
-END:VEVENT
-BEGIN:VEVENT
-DTSTART:20121212T143000Z
-DTEND:20121212T155000Z
-UID:CELCAT - 2013 (91252-16)
 SUMMARY:TD INFO - X7II030 Concepts et outils de développement\, M1ALMA - Architectures Logicielles\, M1ATAL
 LOCATION:Amphi 111 (Bât 26-Erdre RdC)
 DESCRIPTION:Matière : X7II030 Concepts et outils de développement\nPersonnel : GOUDIA Dalila\nGroupe : M1ALMA - Architectures Logicielles\, M1ATAL\nSalle : Amphi 111 (Bât 26-Erdre RdC)\nRemarques : 16-16-16 Gr2 (manque 1 séance) \n
@@ -1751,7 +1724,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20120914T120000Z
 DTEND:20120914T140000Z
-UID:CELCAT - 2013 (70031-3)
+UID:CELCAT - 2013 (91460-3)
 SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
 LOCATION:salle I 011 (Bât 15-C I E)
 DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
@@ -1760,7 +1733,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20120921T120000Z
 DTEND:20120921T140000Z
-UID:CELCAT - 2013 (70031-4)
+UID:CELCAT - 2013 (91460-4)
 SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
 LOCATION:salle I 011 (Bât 15-C I E)
 DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
@@ -1769,7 +1742,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20120928T120000Z
 DTEND:20120928T140000Z
-UID:CELCAT - 2013 (70031-5)
+UID:CELCAT - 2013 (91460-5)
 SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
 LOCATION:salle I 011 (Bât 15-C I E)
 DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
@@ -1778,7 +1751,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20121005T120000Z
 DTEND:20121005T140000Z
-UID:CELCAT - 2013 (70031-6)
+UID:CELCAT - 2013 (91460-6)
 SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
 LOCATION:salle I 011 (Bât 15-C I E)
 DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
@@ -1787,7 +1760,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20121012T120000Z
 DTEND:20121012T140000Z
-UID:CELCAT - 2013 (70031-7)
+UID:CELCAT - 2013 (91460-7)
 SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
 LOCATION:salle I 011 (Bât 15-C I E)
 DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
@@ -1796,7 +1769,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20121019T120000Z
 DTEND:20121019T140000Z
-UID:CELCAT - 2013 (70031-8)
+UID:CELCAT - 2013 (91460-8)
 SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
 LOCATION:salle I 011 (Bât 15-C I E)
 DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
@@ -1805,7 +1778,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20121026T120000Z
 DTEND:20121026T140000Z
-UID:CELCAT - 2013 (70031-9)
+UID:CELCAT - 2013 (91460-9)
 SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
 LOCATION:salle I 011 (Bât 15-C I E)
 DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
@@ -1814,7 +1787,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20121109T130000Z
 DTEND:20121109T150000Z
-UID:CELCAT - 2013 (70031-11)
+UID:CELCAT - 2013 (91460-11)
 SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
 LOCATION:salle I 011 (Bât 15-C I E)
 DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
@@ -1823,16 +1796,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20121116T130000Z
 DTEND:20121116T150000Z
-UID:CELCAT - 2013 (70031-12)
-SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
-LOCATION:salle I 011 (Bât 15-C I E)
-DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
-CATEGORIES:CELCAT Timetabler (vcal) - 2013
-END:VEVENT
-BEGIN:VEVENT
-DTSTART:20121123T130000Z
-DTEND:20121123T150000Z
-UID:CELCAT - 2013 (70031-13)
+UID:CELCAT - 2013 (91460-12)
 SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
 LOCATION:salle I 011 (Bât 15-C I E)
 DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
@@ -1841,10 +1805,28 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTART:20121130T130000Z
 DTEND:20121130T150000Z
-UID:CELCAT - 2013 (70031-14)
+UID:CELCAT - 2013 (91460-14)
 SUMMARY:TP INFO - X7IA030 Programmation Générative\, M1ALMA-GL
 LOCATION:salle I 011 (Bât 15-C I E)
 DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : salle I 011 (Bât 15-C I E)\nRemarques :  12-12-24 - 1  gr ? \n
+CATEGORIES:CELCAT Timetabler (vcal) - 2013
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20121123T130000Z
+DTEND:20121123T143000Z
+UID:CELCAT - 2013 (91459-13)
+SUMMARY:CONTROLE CONTINU - X7IA030 Programmation Générative\, M1ALMA-GL
+LOCATION:Amphi 121 (Bât 26-Erdre RdC)
+DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : Amphi 121 (Bât 26-Erdre RdC)\nRemarques :  12-12-24 - 1  gr ? \n
+CATEGORIES:CELCAT Timetabler (vcal) - 2013
+END:VEVENT
+BEGIN:VEVENT
+DTSTART:20121123T143000Z
+DTEND:20121123T170000Z
+UID:CELCAT - 2013 (91461-13)
+SUMMARY:TD INFO - X7IA030 Programmation Générative\, M1ALMA-GL
+LOCATION:Amphi 121 (Bât 26-Erdre RdC)
+DESCRIPTION:Matière : X7IA030 Programmation Générative\nPersonnel : MOLLI Pascal\nGroupe : M1ALMA-GL\nSalle : Amphi 121 (Bât 26-Erdre RdC)\nRemarques :  12-12-24 - 1  gr ? \n
 CATEGORIES:CELCAT Timetabler (vcal) - 2013
 END:VEVENT
 END:VCALENDAR
