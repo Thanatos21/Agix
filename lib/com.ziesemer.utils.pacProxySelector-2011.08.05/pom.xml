@@ -1,0 +1,59 @@
+<project
+		xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<artifactId>com.ziesemer.utils.pom</artifactId>
+		<groupId>com.ziesemer.utils</groupId>
+		<version>2011.08.05</version>
+	</parent>
+	
+	<name>MarkUtils-PacProxySelector</name>
+	<artifactId>com.ziesemer.utils.pacProxySelector</artifactId>
+	<packaging>jar</packaging>
+	
+	<inceptionYear>2009</inceptionYear>
+	<licenses>
+		<license>
+			<name>GNU LGPL v3</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.html</url>
+		</license>
+	</licenses>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.mozilla</groupId>
+			<artifactId>rhino</artifactId>
+			<version>1.7R3</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.ziesemer.utils</groupId>
+			<artifactId>com.ziesemer.utils.junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<test>com.ziesemer.utils.pacProxySelector.AllTests</test>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
