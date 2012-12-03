@@ -12,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 import net.fortuna.ical4j.data.CalendarBuilder;
@@ -21,14 +20,18 @@ import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Component;
 import net.fortuna.ical4j.model.ComponentList;
+import net.fortuna.ical4j.model.Date;
+import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.PropertyList;
 import net.fortuna.ical4j.model.ValidationException;
 import net.fortuna.ical4j.model.Validator;
 import net.fortuna.ical4j.model.component.CalendarComponent;
+import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.Method;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Version;
+import net.fortuna.ical4j.util.UidGenerator;
 
 /**
  * @author julien
@@ -48,17 +51,14 @@ public class Parser {
         calendar.getProperties().add(new ProdId("Agix"));
         calendar.getProperties().add(Version.VERSION_2_0);
         
-        Component comp = new Component("test composant") {
-
-            @Override
-            public void validate(boolean bln) throws ValidationException {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        };
+        VEvent comp = new VEvent(new DateTime(), "");
+//        UidGenerator ui = new UidGenerator("1");
+//        comp.getProperties().add(ui.generateUid());
         calendar.getComponents().add(comp);
         
         String line;
         
+        String title;
         String source;
         String dest;
         String eventId;
@@ -67,6 +67,11 @@ public class Parser {
         
         while ( scanner.hasNext() ) {
             line = scanner.nextLine();
+            
+            // found a new title
+            if ( line.matches("^\\[.*\\]") ) {
+                title = (((line.split("^\\["))[1]).split("\\]"))[0];
+            }
             
             // found a new source
             if ( line.matches("^source( )*=( )*.*") ) {
@@ -92,12 +97,10 @@ public class Parser {
             
             // found a new date_start
             if ( line.matches("^date_start( )*=( )*.*") ) {
-                Date dateStart = new Date();
             }
             
             // found a new date_end
             if ( line.matches("^date_end( )*=( )*.*") ) {
-                Date dateEnd = new Date();
             }
         }
         
@@ -105,9 +108,9 @@ public class Parser {
         
         scanner.close();
         
-        FileOutputStream outputFile = new FileOutputStream("Lix2IcalResult");
-        CalendarOutputter outputter = new CalendarOutputter();
-        outputter.output(calendar, outputFile);
+//        FileOutputStream outputFile = new FileOutputStream("Lix2IcalResult");
+//        CalendarOutputter outputter = new CalendarOutputter();
+//        outputter.output(calendar, outputFile);
         
         return "";
     }
@@ -142,11 +145,13 @@ public class Parser {
         eventsList = cal.getComponents();
         itEvents = eventsList.iterator();
         
+        writer.write("[" + (cal.getProperty("X-WR-CALNAME")).getValue() + "]\n");
+        
         while (itEvents.hasNext()) {
             Component event = (Component) itEvents.next();
             propertiesList = event.getProperties();
             itProperties = propertiesList.iterator();
-            writer.write("* " + event.getProperty("UID").toString());
+            writer.write("\n* " + event.getProperty("UID").toString());
             
             while ( itProperties.hasNext() ) {
                 Property p = (Property) itProperties.next();
@@ -160,7 +165,7 @@ public class Parser {
                         break;
                     
                     default:
-                        writer.write("match = ^(" + p.getName() + "): " + p.getValue().replaceAll("\n", " - ") + "\n");
+                        writer.write("match = ^(" + p.getName() + "): " + (p.getValue().replaceAll("\n", "\\\\" + "n")).replaceAll("\\,", "\\\\,") + "\n");
                         break;
                 }
             }
