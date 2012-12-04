@@ -150,7 +150,7 @@ public class Parser {
      * @return
      * @throws IOException
      */
-    public String Ical2Lix(String icsFilePath, String lixFilePath) throws FileNotFoundException, IOException, ParserException {
+    public static void Ical2Lix(String icsFilePath, String lixFilePath) throws FileNotFoundException, IOException, ParserException {
         FileInputStream inputFile = new FileInputStream(icsFilePath);
         
         CalendarBuilder builder = new CalendarBuilder();
@@ -201,8 +201,6 @@ public class Parser {
         writer.close();
         
         System.out.println("Ical2Lix Done!");
-        
-        return "";
     }
     
     
@@ -214,7 +212,7 @@ public class Parser {
      * @throws IOException
      * @throws ParserException 
      */
-    public Agenda ical2Agenda(String icsFilePath) throws FileNotFoundException, IOException, ParserException {
+    public static Agenda ical2Agenda(String icsFilePath) throws FileNotFoundException, IOException, ParserException {
         Agenda agenda = new Agenda(null, null, null);
         ArrayList<Evt> eventList = new ArrayList<>();
         
