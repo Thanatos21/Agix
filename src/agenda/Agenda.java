@@ -6,8 +6,12 @@ package agenda;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import net.fortuna.ical4j.data.ParserException;
+import net.fortuna.ical4j.model.ValidationException;
+import tools.Parser;
 
 /**
  *
@@ -40,47 +44,25 @@ public class Agenda {
      * Make sure that you are using this method with .lix or .ics
      * @param file
      */
-    public Agenda(File file) throws FileNotFoundException {
-        if(file.getName().endsWith(".lix")){
-            Scanner scanner = new Scanner(file);
-            Evt evenement;
-            String line;
-
-            while ( scanner.hasNext() ) {
-                line = scanner.nextLine();
-
-                if(line.contains("title")){
-                    
-                }
-                
-                if(line.contains("source")){
-                    
-                }
-                
-                if(line.contains("dest")){
-                    
-                }
-                
-                if(line.contains("*")){
-                    
-                }
-                        
-
-                }
-
-                //System.out.println(line);
-            
-
-            System.out.println("Lix2Ical Done!");
-
-            scanner.close();
-        }
-        else if(file.getName().endsWith(".ics")) {
-                
-        } 
-        else {
+    public Agenda(File file) throws FileNotFoundException, IOException, ValidationException, ParserException {
+        if(!file.getName().endsWith(".lix") && !file.getName().endsWith(".ics"))
+        {
             System.err.println("Unsupported file.");
+        }else{
+            if(file.getName().endsWith(".lix")){
+                //convert to ical 
+                Parser.Lix2Ical(file);
+            }
         }
+
+        Agenda tmp = Parser.ical2Agenda("Lix2IcalResult");
+        this.id = tmp.id;
+        this.dest = tmp.dest;
+        this.src = tmp.src;
+        this.title = tmp.title;
+        this.summary = tmp.summary;
+        this.events = tmp.events;
+        
     }
 
     /**
