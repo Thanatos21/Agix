@@ -32,6 +32,7 @@ public class Agenda {
         this.id = id;
         this.dest = dest;
         this.src = src;
+        events = new ArrayList<>();
     }
     
     /**
@@ -74,12 +75,11 @@ public class Agenda {
 
             scanner.close();
         }
-        else{
-            if(file.getName().endsWith(".ics")){
+        else if(file.getName().endsWith(".ics")) {
                 
-            }else{
-                System.err.println("Unsupported file.");
-            }
+        } 
+        else {
+            System.err.println("Unsupported file.");
         }
     }
 

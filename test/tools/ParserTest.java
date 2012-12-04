@@ -4,7 +4,13 @@
  */
 package tools;
 
+import agenda.Agenda;
+import agenda.Evt;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Iterator;
+import net.fortuna.ical4j.data.ParserException;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -61,5 +67,23 @@ public class ParserTest {
         Parser instance = new Parser();
         
         //assertEquals(result, instance.Ical2Lix(filePath, "ical2LixResult"));
+    }
+    
+    /**
+     * Test of ical2Agenda method, of class Parser
+     */
+    @Test
+    public void testIcal2Agenda() throws FileNotFoundException, IOException, ParserException {
+        String filePath = "Lix2IcalResult";
+        Parser instance = new Parser();
+        Agenda agenda = instance.ical2Agenda(filePath);
+        
+        
+        
+        Iterator evtit = agenda.getEvents().iterator();
+        while ( evtit.hasNext() ) {
+            Evt e = (Evt) evtit.next();
+            System.out.println(e.toString());
+        }
     }
 }

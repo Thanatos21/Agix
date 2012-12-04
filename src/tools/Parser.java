@@ -4,11 +4,15 @@
  */
 package tools;
 
+import agenda.Agenda;
+import agenda.Evt;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 import net.fortuna.ical4j.data.CalendarBuilder;
@@ -202,6 +206,53 @@ public class Parser {
         System.out.println("Ical2Lix Done!");
         
         return "";
+    }
+    
+    
+    public Agenda ical2Agenda(String icsFilePath) throws FileNotFoundException, IOException, ParserException {
+        Agenda agenda = new Agenda(null, null, null);
+        ArrayList<Evt> eventList = new ArrayList<>();
+        
+        FileInputStream inputFile = new FileInputStream(icsFilePath);
+        
+        CalendarBuilder builder = new CalendarBuilder();
+        
+        ComponentList eventsList;
+        PropertyList propertiesList;
+        Iterator itEvents, itProperties;
+        
+        Calendar cal = builder.build(inputFile);
+        eventsList = cal.getComponents();
+        itEvents = eventsList.iterator();
+        
+        agenda.setTitle(cal.getProperty("X-WR-CALNAME").getValue());
+        
+        while ( itEvents.hasNext() ) {
+            Component event = (Component) itEvents.next();
+            
+            if ( event.getName().equals("VEVENT") ) {
+                propertiesList = event.getProperties();
+                itProperties = propertiesList.iterator();
+//                Evt currentEvt = new Evt(event.getProperty("UID").getValue(),
+//                                 new Date(event.getProperty("DTSTART").getValue()),
+//                                 new Date(event.getProperty("DTEND").getValue())
+//                        );
+                Evt currentEvt = new Evt(event.getProperty("UID").getValue(), null, null);
+
+                while ( itProperties.hasNext() ) {
+                    Property p = (Property) itProperties.next();
+                    if ( !(p.getName()).equals("DTSTART") && !(p.getName()).equals("DTEND")) {
+                        currentEvt.addMatch(p.getName(), ((p.getValue()).replaceAll("\n", "\\\\" + "n")).replaceAll("\\,", "\\\\" + ","));
+                    }
+                }
+                
+                agenda.addEvent(currentEvt);
+            }
+        }
+        
+        System.out.println("ical2Agenda Done!");
+        
+        return agenda;
     }
     
 }

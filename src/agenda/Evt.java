@@ -50,7 +50,7 @@ public class Evt {
     }
 
     /**
-     * Return the HashMap wich contains all the matches of the event
+     * Return the HashMap witch contains all the matches of the event
      * @return matches
      */
     public HashMap<String, String> getMatch() {
