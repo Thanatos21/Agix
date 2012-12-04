@@ -157,6 +157,25 @@ public class AgendaManager {
     }
     
     /**
+     * Removes the agenda given in parameter from the agendas list of the
+     * AgendaManager.
+     * @param agenda 
+     */
+    public void removeAgenda(String agenda, Services service) throws IOException, ServiceException{
+//        this.agendas.remove(agenda);
+        
+        switch(service){
+            case GOOGLE:
+                tools.googleTools.Tools.removeCalendar(agenda);
+                break;
+            case LOCALHOST:
+                tools.localhostTools.Tools.removeCalendar(agenda);
+                break;
+        }
+        
+    }
+    
+    /**
      * Edits an agenda. Replace an agenda into the agendas list of the 
      * AgendaManager by another agenda. For this method, the id of the agenda to
      * edit have to be the same that the agenda given in parameter.

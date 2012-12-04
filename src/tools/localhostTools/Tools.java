@@ -57,6 +57,16 @@ public class Tools {
         File lix = new File(agenda.getTitle() + ".lix");
         lix.delete();
     }
+    
+    /**
+    * Deletes the given Agenda.
+    * 
+    * @param agenda 
+    */
+    public static void removeCalendar(String agenda) {
+        File lix = new File(agenda + ".lix");
+        lix.delete();
+    }
 
     /**
     * Prints the titles of calendars in owncalendarsFeedUrl.

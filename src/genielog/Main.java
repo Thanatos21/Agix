@@ -219,7 +219,29 @@ public class Main {
                 }
                 break;
             case 4:
-                System.err.println("\tNot yet implemented...");
+                // Deleting an agenda
+                do{
+                    validService = executeService(askService());
+                }while(!validService);
+                try {
+                    if(service != Services.LOCALHOST) askAuthentication();
+                    int i = 0;
+                    ArrayList<String> agendas = AgendaManager.getInstance().getAgendasList(service);
+                    for(String agenda : agendas){
+                        i++;
+                        System.out.println("##  " + i + " - " + agenda + "##");
+                    }
+                    System.out.println("##  Which agenda do you want to delete? ##");
+                    int choix = cin.nextInt();
+                    while ( (choix < 1) || (choix > i) ) {
+                        System.out.println("##  Wrong choice, try again : ##");
+                        choix = cin.nextInt();
+                    }
+                    choix--;
+                    AgendaManager.getInstance().removeAgenda(agendas.get(choix), service);
+                } catch (IOException | ServiceException ex) {
+                    System.err.println("Error in authentication process");
+                }
                 break;
             case 5:
                 do{
