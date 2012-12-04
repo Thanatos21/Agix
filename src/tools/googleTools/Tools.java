@@ -89,7 +89,6 @@ public class Tools {
     
     for(Evt evt : agenda.getEvents()){
         EventEntry event = new EventEntry();
-        event.set
     }
 
     // Insert the calendar
