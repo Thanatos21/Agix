@@ -268,4 +268,8 @@ public class Parser {
         return agenda;
     }
     
+    public static void main(String[] args) throws FileNotFoundException, IOException, ParserException{
+        Parser.Ical2Lix("g28556.ics", "Agix.lix");
+    }
+    
 }

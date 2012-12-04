@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import net.fortuna.ical4j.data.ParserException;
 import net.fortuna.ical4j.model.ValidationException;
 import tools.Parser;
@@ -37,6 +36,10 @@ public class Agenda {
         this.dest = dest;
         this.src = src;
         events = new ArrayList<>();
+    }
+    
+    public Agenda(){
+        
     }
     
     /**

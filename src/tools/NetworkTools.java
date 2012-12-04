@@ -4,23 +4,14 @@
  */
 package tools;
 
-import com.btr.proxy.search.ProxySearch;
-import com.btr.proxy.search.ProxySearch.Strategy;
 import com.btr.proxy.selector.pac.PacProxySelector;
 import com.btr.proxy.selector.pac.UrlPacScriptSource;
-import com.btr.proxy.util.PlatformUtil;
-import com.btr.proxy.util.PlatformUtil.Platform;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.ProxySelector;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  *
@@ -94,7 +85,8 @@ public class NetworkTools {
     
     
     public static void main(String args[]){
-       downloadFrom("https://www.edt-sciences.univ-nantes.fr/g6935.ics");
+       downloadFrom("http://www.edt-sciences.univ-nantes.fr/g6935.ics");
+       downloadFrom("https://www.google.com/calendar/ical/ngtambgsg91ntk75s2mc9ifte4%40group.calendar.google.com/private-f2577d7def9bee876bfaedde5c249ca0/basic.ics");
     }
     
 }

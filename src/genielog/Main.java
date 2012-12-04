@@ -4,16 +4,22 @@
  */
 package genielog;
 
+import agenda.Agenda;
 import agenda.AgendaManager;
 import agenda.Services;
 import com.google.gdata.util.ServiceException;
 import gui.Mainwindow;
 import java.io.Console;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.fortuna.ical4j.data.ParserException;
+import net.fortuna.ical4j.model.ValidationException;
 
 /**
  *
