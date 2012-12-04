@@ -13,11 +13,11 @@ import java.util.HashMap;
  */
 public class Evt {
     private String id;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private HashMap<String, String> matches;
     
-    public Evt(String id, Date start, Date end){
+    public Evt(String id, String start, String end){
         this.id = id;
         this.startDate = start;
         this.endDate = end;
@@ -37,7 +37,7 @@ public class Evt {
      * Return the starting date of the event
      * @return startDate
      */
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
@@ -45,7 +45,7 @@ public class Evt {
      * Return the ending date of the event
      * @return endDate
      */
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
@@ -69,7 +69,7 @@ public class Evt {
      *Set the starting date of the event
      * @param startDate
      */
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -77,7 +77,7 @@ public class Evt {
      * Set the ending date of the event
      * @param endDate
      */
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

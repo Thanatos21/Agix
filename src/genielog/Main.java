@@ -143,7 +143,19 @@ public class Main {
                 System.err.println("\tNot yet implemented...");
                 break;
             case 3 :
-                System.err.println("\tNot yet implemented...");
+                do{
+                    validService = executeService(askService());
+                }while(!validService);
+                try {
+                    if(service != Services.LOCALHOST) askAuthentication();
+                    int i = 1;
+                    for(String agenda : AgendaManager.getInstance().getAgendasList(service)){
+                        System.out.println("##  " + i + " - " + agenda);
+                        i++;
+                    }
+                } catch (IOException | ServiceException ex) {
+                    System.err.println("Error in authentication process");
+                }
                 break;
             case 4:
                 System.err.println("\tNot yet implemented...");

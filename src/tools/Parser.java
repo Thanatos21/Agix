@@ -12,7 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 import net.fortuna.ical4j.data.CalendarBuilder;
@@ -209,6 +208,14 @@ public class Parser {
     }
     
     
+    /**
+     * This method translate an ical file into an Agenda
+     * @param icsFilePath The relative or absolute adress of the Ical file to read
+     * @return The Agenda corresponding to the ical file
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws ParserException 
+     */
     public Agenda ical2Agenda(String icsFilePath) throws FileNotFoundException, IOException, ParserException {
         Agenda agenda = new Agenda(null, null, null);
         ArrayList<Evt> eventList = new ArrayList<>();
@@ -241,8 +248,18 @@ public class Parser {
 
                 while ( itProperties.hasNext() ) {
                     Property p = (Property) itProperties.next();
-                    if ( !(p.getName()).equals("DTSTART") && !(p.getName()).equals("DTEND")) {
-                        currentEvt.addMatch(p.getName(), ((p.getValue()).replaceAll("\n", "\\\\" + "n")).replaceAll("\\,", "\\\\" + ","));
+                    switch (p.getName()) {
+                        case "DTSTART" :
+                            currentEvt.setStartDate(p.getValue());
+                            break;
+                            
+                        case "DTEND" :
+                            currentEvt.setEndDate(p.getValue());
+                            break;
+                            
+                        default :
+                            currentEvt.addMatch(p.getName(), ((p.getValue()).replaceAll("\n", "\\\\" + "n")).replaceAll("\\,", "\\\\" + ","));
+                            break;
                     }
                 }
                 

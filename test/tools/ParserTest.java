@@ -78,12 +78,14 @@ public class ParserTest {
         Parser instance = new Parser();
         Agenda agenda = instance.ical2Agenda(filePath);
         
-        
+        int i = 0;
         
         Iterator evtit = agenda.getEvents().iterator();
         while ( evtit.hasNext() ) {
             Evt e = (Evt) evtit.next();
             System.out.println(e.toString());
+            i++;
         }
+        System.out.println(i + "Events succesfully added");
     }
 }
