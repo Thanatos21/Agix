@@ -113,9 +113,7 @@ public class Tools {
         while(!ok && i < entries.size()){
             
             entry = entries.get(i);
-            System.out.println("Entry : " + entry.getTitle().getPlainText());
             if(entry.getTitle().getPlainText().equals(agenda.getTitle())){
-                System.out.println("--->"+entry.getTitle().toString());
                 ok = true;
             }
             i++;
