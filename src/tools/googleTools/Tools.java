@@ -6,10 +6,12 @@ package tools.googleTools;
 
 import agenda.Agenda;
 import agenda.AgendaManager;
+import agenda.Evt;
 import com.google.gdata.client.calendar.CalendarService;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.calendar.CalendarEntry;
 import com.google.gdata.data.calendar.CalendarFeed;
+import com.google.gdata.data.extensions.EventEntry;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
@@ -84,6 +86,11 @@ public class Tools {
     CalendarEntry calendar = new CalendarEntry();
     calendar.setTitle(new PlainTextConstruct(agenda.getTitle()));
     calendar.setSummary(new PlainTextConstruct(agenda.getSummary()));
+    
+    for(Evt evt : agenda.getEvents()){
+        EventEntry event = new EventEntry();
+        event.set
+    }
 
     // Insert the calendar
     calServ.insert(owncalendarsFeedUrl, calendar);

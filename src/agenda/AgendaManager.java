@@ -134,8 +134,7 @@ public class AgendaManager {
             case LOCALHOST:
                 tools.localhostTools.Tools.createCalendar(agenda);
                 break;
-        }
-        
+        }     
     }
     
     /**
