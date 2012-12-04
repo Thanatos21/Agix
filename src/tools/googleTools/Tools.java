@@ -126,6 +126,42 @@ public class Tools {
         
         disconnect();    
     }
+    
+       /**
+    * Deletes the given Agenda.
+    * 
+    * @param agenda 
+    * @throws IOException If there is a problem communicating with the server.
+    * @throws ServiceException If the service is unable to handle the request.
+    */
+    public static void removeCalendar(String agenda) throws IOException, ServiceException {
+      
+        connect();
+        
+        System.out.println("Deleting " + agenda + " from the current account");
+            
+        CalendarFeed resultFeed = calServ.getFeed(owncalendarsFeedUrl, CalendarFeed.class);
+        List<CalendarEntry> entries = resultFeed.getEntries();
+        
+        int i = 0;
+        boolean ok = false;
+        CalendarEntry entry = null;
+        while(!ok && i < entries.size()){
+            
+            entry = entries.get(i);
+            System.out.println("Entry : " + entry.getTitle().getPlainText());
+            if(entry.getTitle().getPlainText().equals(agenda)){
+                System.out.println("--->"+entry.getTitle().toString());
+                ok = true;
+            }
+            i++;
+        }
+        
+        if(ok)
+            entry.delete();
+        
+        disconnect();    
+    }
   
   /**
    * Ask information to authentified the user to his account and initialize 
