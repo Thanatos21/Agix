@@ -17,7 +17,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * This class Provides methode to manage Google calendar.
@@ -55,7 +54,11 @@ public class Tools {
         // Print the title of each calendar
         for (int i = 0; i < resultFeed.getEntries().size(); i++) {
           CalendarEntry entry = resultFeed.getEntries().get(i);
-          agendas.add(entry.getTitle().getPlainText());      
+          agendas.add(entry.getTitle().getPlainText());  
+          
+          System.out.println(entry.getId());
+          
+          
         }
                
         disconnect();
@@ -110,7 +113,9 @@ public class Tools {
         while(!ok && i < entries.size()){
             
             entry = entries.get(i);
-            if(entry.getTitle().toString().equals(agenda.toString())){
+            System.out.println("Entry : " + entry.getTitle().getPlainText());
+            if(entry.getTitle().getPlainText().equals(agenda.getTitle())){
+                System.out.println("--->"+entry.getTitle().toString());
                 ok = true;
             }
             i++;
@@ -132,6 +137,7 @@ public class Tools {
         
       login = AgendaManager.getInstance().getLogin();
       passwd = AgendaManager.getInstance().getPassword();
+
       
         // Create necessary URL objects
         try {
@@ -146,6 +152,7 @@ public class Tools {
         calServ = new CalendarService("kissFairyCorporation-agix-1.0");
 
         try {
+
           calServ.setUserCredentials(login, passwd);
         } catch (AuthenticationException e) {}
         
@@ -164,4 +171,15 @@ public class Tools {
         owncalendarsFeedUrl = null;
     }
   
+    public static void main(String[] args) throws IOException, ServiceException{
+//        Tools.connect();
+//        
+//        Agenda Agix = new Agenda();
+//        Agix.setTitle("Agix");
+//        
+//        Tools.removeCalendar(Agix);
+//        
+//        Tools.disconnect();
+    }
+    
 }
