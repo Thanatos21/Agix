@@ -31,10 +31,10 @@ public class Parser {
     /**
      * Translates a Lix file into an Ical file
      * @param file
-     * @return
+     * @return 
      * @throws IOException
      */
-    public String Lix2Ical(File file) throws IOException, ValidationException {
+    public static void Lix2Ical(File file) throws IOException, ValidationException {
         Scanner scanner = new Scanner(file);
         
         File outputFile = new File("Lix2IcalResult");
@@ -139,8 +139,6 @@ public class Parser {
         scanner.close();
         writer.flush();
         writer.close();
-        
-        return "";
     }
     
     
