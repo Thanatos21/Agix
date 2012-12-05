@@ -43,9 +43,10 @@ public class Main {
         System.out.println("##                            ##");
         System.out.println("##  1 - Configure the Proxy   ##");
         System.out.println("##  2 - Create a new Agenda   ##");
-        System.out.println("##  3 - Edit an Agenda        ##");
-        System.out.println("##  4 - Delete an Agenda      ##");
-        System.out.println("##  5 - Display agendas list  ##");
+        System.out.println("##  3 - Sync. an Agenda       ##");
+        System.out.println("##  4 - Sync. all Agendas     ##");
+        System.out.println("##  5 - Delete an Agenda      ##");
+        System.out.println("##  6 - Display agendas list  ##");
         System.out.println("##  0 -                 Quit  ##");
         System.out.println("##  ------------------------- ##");
         System.out.print("##  Action :  ");
@@ -255,6 +256,8 @@ public class Main {
                 }
                 break;
             case 4:
+                break;
+            case 5:
                 // Deleting an agenda
                 do{
                     validService = executeService(askService());
@@ -279,7 +282,7 @@ public class Main {
                     System.err.println("Error in authentication process");
                 }
                 break;
-            case 5:
+            case 6:
                 do{
                     validService = executeService(askService());
                 }while(!validService);
