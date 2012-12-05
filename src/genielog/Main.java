@@ -153,7 +153,7 @@ public class Main {
         /* the user have choosed the service and the agenda to modify*/
         
         //verification that the choice is valid.
-        if(askAgenda < agendas.size() || askAgenda > agendas.size()){
+        if(askAgenda < 1 || askAgenda > agendas.size()){
             System.err.println("Please select a valid Agenda...");
             validAgenda = false;
         }else{
