@@ -43,7 +43,7 @@ public class Tools {
                     writer.write("date_end = " + event.getEndDate().toString() + "\n");
                 }
             }catch(NullPointerException e){
-                System.out.println("No Event into the Agenda...");
+                System.err.println("No Event into the Agenda...");
             }
         }     
     }

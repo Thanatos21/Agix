@@ -121,36 +121,40 @@ public class Tools {
         }
         
     //Add all events to the calendar.
-    for(Evt evt : agenda.getEvents()){
-        
-        EventEntry event = new EventEntry();
-          
-        /* Time */
-        When time = new When();
-        
-        SimpleDateFormat simpledate = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
-        Date s = simpledate.parse(evt.getStartDate());     
-        Date e = simpledate.parse(evt.getEndDate());
+    try{
+        for(Evt evt : agenda.getEvents()){
 
-        time.setStartTime(new DateTime(s));
-        time.setEndTime(new DateTime(e));
-        event.addTime(time);
-        
-        /* Title */
-        event.setTitle(TextConstruct.plainText(evt.getMatch().get("SUMMARY")));
-        
-        /* Description */
-        event.setSummary(TextConstruct.plainText(evt.getMatch().get("DESCRIPTION")));
-        
-        /* Place */
-        Where where = new Where();
-        where.setValueString(evt.getMatch().get("LOCATION"));
-        event.addLocation(where);
-        
-        System.out.println(evt.getId());
-        
-        calServ.insert(new URL(postUrlString), event);
+            EventEntry event = new EventEntry();
 
+            /* Time */
+            When time = new When();
+
+            SimpleDateFormat simpledate = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
+            Date s = simpledate.parse(evt.getStartDate());     
+            Date e = simpledate.parse(evt.getEndDate());
+
+            time.setStartTime(new DateTime(s));
+            time.setEndTime(new DateTime(e));
+            event.addTime(time);
+
+            /* Title */
+            event.setTitle(TextConstruct.plainText(evt.getMatch().get("SUMMARY")));
+
+            /* Description */
+            event.setSummary(TextConstruct.plainText(evt.getMatch().get("DESCRIPTION")));
+
+            /* Place */
+            Where where = new Where();
+            where.setValueString(evt.getMatch().get("LOCATION"));
+            event.addLocation(where);
+
+            System.out.println(evt.getId());
+
+            calServ.insert(new URL(postUrlString), event);
+
+        }
+    }catch(NullPointerException e){
+        System.err.println("No Event into the Agenda...");
     }
   
     disconnect();

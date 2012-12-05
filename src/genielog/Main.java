@@ -107,13 +107,12 @@ public class Main {
     }
     
     /**
-     * Returns the service selected by the user.
-     * @return service  
+     * Returns the number of the agenda selected.
+     * @return agenda the number of the selected agenda.  
      */
     private static int askAgenda(){
         
         Scanner cin = new Scanner(System.in);
-        Console cons = System.console();
         
         System.out.println("################################");
         System.out.println("##      Choose an Agenda      ##");
@@ -123,6 +122,24 @@ public class Main {
         System.out.println("##  ------------------------- ##");
 
        return agenda;
+    }
+    
+    /**
+     * Returns the title of the new agenda to create.
+     * @return title  
+     */
+    private static String askNewAgenda(){
+        
+        Scanner cin = new Scanner(System.in);
+        
+        System.out.println("################################");
+        System.out.println("##      Enter the title       ##");
+        System.out.println("################################");
+        System.out.print  ("##  Agenda : ");
+        String title = cin.next();
+        System.out.println("##  ------------------------- ##");
+
+       return title;
     }
     
     /**
@@ -152,7 +169,7 @@ public class Main {
         
         
         
-        return false;
+        return validAgenda;
     }
     
     /**
@@ -198,7 +215,20 @@ public class Main {
                 tools.NetworkTools.setUpProxy(null, null, null, null);
                 break;
             case 2:
-                System.err.println("\tNot yet implemented...");
+                do{
+                    validService = executeService(askService());
+                }while(!validService);
+                String title = askNewAgenda();
+                Agenda ag = new Agenda();
+                ag.setTitle(title);
+                if(service != Services.LOCALHOST) askAuthentication();
+                try {
+                    AgendaManager.getInstance().addAgenda(ag, service);
+                } catch (ParseException | ServiceException ex) {
+                    System.err.println("An error occured when creating the new Agenda");
+                } 
+                
+                
                 break;
             case 3 :
                 do{
