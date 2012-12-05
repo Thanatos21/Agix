@@ -75,11 +75,7 @@ public class Tools {
         // Print the title of each calendar
         for (int i = 0; i < resultFeed.getEntries().size(); i++) {
           CalendarEntry entry = resultFeed.getEntries().get(i);
-          agendas.add(entry.getTitle().getPlainText());  
-          
-          System.out.println(entry.getId());
-          
-          
+          agendas.add(entry.getTitle().getPlainText());         
         }
                
         disconnect();
@@ -273,13 +269,41 @@ public class Tools {
         allcalendarsFeedUrl = null;
         owncalendarsFeedUrl = null;
     }
+    
+    public static void getIcal(Agenda agenda) throws IOException, ServiceException{
+        CalendarFeed resultFeed = calServ.getFeed(owncalendarsFeedUrl, CalendarFeed.class);
+        List<CalendarEntry> entries = resultFeed.getEntries();
+        
+        int i = 0;
+        boolean ok = false;
+        CalendarEntry entry = null;
+        while(!ok && i < entries.size()){
+            
+            entry = entries.get(i);
+            System.out.println("Entry : " + entry.getTitle().getPlainText());
+            if(entry.getTitle().getPlainText().equals(agenda)){
+                System.out.println("--->"+entry.getTitle().toString());
+                ok = true;
+            }
+            i++;
+        }
+        String[] ids = entry.getId().split("/");
+        String id = ids[ids.length-1];
+        System.out.println(id);
+        
+        tools.NetworkTools.downloadFrom("https://www.google.com/calendar/ical/"+id+"/public/basic.ics");
+
+        
+        
+        
+    }
   
     public static void main(String[] args) throws IOException, ServiceException, FileNotFoundException, ValidationException, ParserException, ParseException{
         Tools.connect();
         
-        Agenda Agix = new Agenda(new File("Agix.lix"));
-        
-        Tools.createCalendar(Agix);
+        Agenda ag = new Agenda();
+        ag.setTitle("pouett");
+        getIcal(ag);
         
         Tools.disconnect();
     }
