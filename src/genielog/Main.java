@@ -13,6 +13,7 @@ import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -142,7 +143,11 @@ public class Main {
             Agenda toEdit = new Agenda(new File(agendas.get(askAgenda-1)+".lix"));
             System.out.println(toEdit.getTitle());
             AgendaManager.getInstance().removeAgenda(toEdit, service);
-            AgendaManager.getInstance().addAgenda(toEdit, service);
+            try {
+                AgendaManager.getInstance().addAgenda(toEdit, service);
+            } catch (ParseException ex) {
+                System.err.println("An error occured when pushing the agenda on the server.");
+            }
         }
         
         
