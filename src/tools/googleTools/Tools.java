@@ -234,10 +234,9 @@ public class Tools {
    */
   private static void connect() throws IOException, ServiceException{
         
-//      login = AgendaManager.getInstance().getLogin();
-//      passwd = AgendaManager.getInstance().getPassword();
-login = "maelbar44@gmail.com";
-passwd = "surfman11";
+      login = AgendaManager.getInstance().getLogin();
+      passwd = AgendaManager.getInstance().getPassword();
+
       
         // Create necessary URL objects
         try {
