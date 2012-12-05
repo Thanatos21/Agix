@@ -256,6 +256,7 @@ public class Main {
                 }
                 break;
             case 4:
+                System.err.println("Not yet implemented...");
                 break;
             case 5:
                 // Deleting an agenda
