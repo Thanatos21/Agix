@@ -2,6 +2,7 @@ package agenda;
 
 import com.google.gdata.util.ServiceException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import tools.NetworkTools;
@@ -123,7 +124,7 @@ public class AgendaManager {
      * @throws IOException 
      * @throws ServiceException  
      */
-    public void addAgenda(Agenda agenda, Services service) throws IOException, ServiceException{
+    public void addAgenda(Agenda agenda, Services service) throws IOException, ServiceException, ParseException{
         
 //        this.agendas.add(agenda);
         

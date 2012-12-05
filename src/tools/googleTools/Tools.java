@@ -8,17 +8,36 @@ import agenda.Agenda;
 import agenda.AgendaManager;
 import agenda.Evt;
 import com.google.gdata.client.calendar.CalendarService;
+import com.google.gdata.data.BaseEntry;
+import com.google.gdata.data.DateTime;
+import com.google.gdata.data.ExtensionPoint;
+import com.google.gdata.data.ParseSource;
 import com.google.gdata.data.PlainTextConstruct;
+import com.google.gdata.data.TextConstruct;
 import com.google.gdata.data.calendar.CalendarEntry;
+import com.google.gdata.data.calendar.CalendarEventEntry;
 import com.google.gdata.data.calendar.CalendarFeed;
+import com.google.gdata.data.calendar.TimeZoneProperty;
 import com.google.gdata.data.extensions.EventEntry;
+import com.google.gdata.data.extensions.When;
+import com.google.gdata.data.extensions.Where;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import net.fortuna.ical4j.data.ParserException;
+import net.fortuna.ical4j.model.ValidationException;
 
 /**
  * This class Provides methode to manage Google calendar.
@@ -76,7 +95,7 @@ public class Tools {
    * @throws ServiceException If the service is unable to handle the request.
    */
   public static void createCalendar(Agenda agenda) 
-        throws IOException, ServiceException {
+        throws IOException, ServiceException, ParseException {
       
     connect();
       
@@ -86,14 +105,54 @@ public class Tools {
     CalendarEntry calendar = new CalendarEntry();
     calendar.setTitle(new PlainTextConstruct(agenda.getTitle()));
     calendar.setSummary(new PlainTextConstruct(agenda.getSummary()));
+    calendar.setTimeZone(new TimeZoneProperty("Europe/Paris"));
     
-    for(Evt evt : agenda.getEvents()){
-        EventEntry event = new EventEntry();
-    }
-
     // Insert the calendar
     calServ.insert(owncalendarsFeedUrl, calendar);
     
+//    retrieve the PostUrl for this agenda.
+        CalendarFeed resultFeed = calServ.getFeed(owncalendarsFeedUrl, CalendarFeed.class);
+        String postUrlString = null;
+
+        for(CalendarEntry cal : resultFeed.getEntries()){
+            if(cal.getTitle().getPlainText().equals(agenda.getTitle())){
+                postUrlString = cal.getLink("alternate", "application/atom+xml").getHref();
+            }
+        }
+        
+    //Add all events to the calendar.
+    for(Evt evt : agenda.getEvents()){
+        
+        EventEntry event = new EventEntry();
+          
+        /* Time */
+        When time = new When();
+        
+        SimpleDateFormat simpledate = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
+        Date s = simpledate.parse(evt.getStartDate());     
+        Date e = simpledate.parse(evt.getEndDate());
+
+        time.setStartTime(new DateTime(s));
+        time.setEndTime(new DateTime(e));
+        event.addTime(time);
+        
+        /* Title */
+        event.setTitle(TextConstruct.plainText(evt.getMatch().get("SUMMARY")));
+        
+        /* Description */
+        event.setSummary(TextConstruct.plainText(evt.getMatch().get("DESCRIPTION")));
+        
+        /* Place */
+        Where where = new Where();
+        where.setValueString(evt.getMatch().get("LOCATION"));
+        event.addLocation(where);
+        
+        System.out.println(evt.getId());
+        
+        calServ.insert(new URL(postUrlString), event);
+
+    }
+  
     disconnect();
   }
    
@@ -175,9 +234,10 @@ public class Tools {
    */
   private static void connect() throws IOException, ServiceException{
         
-      login = AgendaManager.getInstance().getLogin();
-      passwd = AgendaManager.getInstance().getPassword();
-
+//      login = AgendaManager.getInstance().getLogin();
+//      passwd = AgendaManager.getInstance().getPassword();
+login = "maelbar44@gmail.com";
+passwd = "surfman11";
       
         // Create necessary URL objects
         try {
@@ -211,15 +271,14 @@ public class Tools {
         owncalendarsFeedUrl = null;
     }
   
-    public static void main(String[] args) throws IOException, ServiceException{
-//        Tools.connect();
-//        
-//        Agenda Agix = new Agenda();
-//        Agix.setTitle("Agix");
-//        
-//        Tools.removeCalendar(Agix);
-//        
-//        Tools.disconnect();
+    public static void main(String[] args) throws IOException, ServiceException, FileNotFoundException, ValidationException, ParserException, ParseException{
+        Tools.connect();
+        
+        Agenda Agix = new Agenda(new File("Agix.lix"));
+        
+        Tools.createCalendar(Agix);
+        
+        Tools.disconnect();
     }
     
 }
